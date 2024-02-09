@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "monorepo": true,
+  "projects": {
+    "application-example": {
+      "type": "application",
+      "root": "apps/application-example",
+      "entryFile": "main",
+      "sourceRoot": "apps/application-example/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/application-example/tsconfig.json"
+      }
+    },
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "logger": {
+      "type": "library",
+      "root": "libs/logger",
+      "entryFile": "index",
+      "sourceRoot": "libs/logger/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/logger/tsconfig.lib.json"
+      }
+    },
+    "middleware": {
+      "type": "library",
+      "root": "libs/middleware",
+      "entryFile": "index",
+      "sourceRoot": "libs/middleware/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/middleware/tsconfig.lib.json"
+      }
+    },
+    "event-emitter": {
+      "type": "library",
+      "root": "libs/event-emitter",
+      "entryFile": "index",
+      "sourceRoot": "libs/event-emitter/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/event-emitter/tsconfig.lib.json"
+      }
+    },
+    "moment": {
+      "type": "library",
+      "root": "libs/moment",
+      "entryFile": "index",
+      "sourceRoot": "libs/moment/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/moment/tsconfig.lib.json"
+      }
+    },
+    "request-factory": {
+      "type": "library",
+      "root": "libs/request-factory",
+      "entryFile": "index",
+      "sourceRoot": "libs/request-factory/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/request-factory/tsconfig.lib.json"
+      }
+    },
+    "contract": {
+      "type": "library",
+      "root": "libs/contract",
+      "entryFile": "index",
+      "sourceRoot": "libs/contract/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/contract/tsconfig.lib.json"
+      }
+    },
+    "error-handler": {
+      "type": "library",
+      "root": "libs/error-handler",
+      "entryFile": "index",
+      "sourceRoot": "libs/error-handler/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/error-handler/tsconfig.lib.json"
+      }
+    },
+    "masking-data": {
+      "type": "library",
+      "root": "libs/masking-data",
+      "entryFile": "index",
+      "sourceRoot": "libs/masking-data/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/masking-data/tsconfig.lib.json"
+      }
+    },
+    "healthcheck": {
+      "type": "library",
+      "root": "libs/healthcheck",
+      "entryFile": "index",
+      "sourceRoot": "libs/healthcheck/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/healthcheck/tsconfig.lib.json"
+      }
+    },
+    "common-dto": {
+      "type": "library",
+      "root": "libs/common-dto",
+      "entryFile": "index",
+      "sourceRoot": "libs/common-dto/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common-dto/tsconfig.lib.json"
+      }
+    },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    }
+  }
+}

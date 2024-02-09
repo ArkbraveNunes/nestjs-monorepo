@@ -1,0 +1,15 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.validate": [
+        "typescript"
+    ],
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": false,
+    "files.insertFinalNewline": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.eol": "\n",
+}

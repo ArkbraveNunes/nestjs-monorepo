@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "clearMocks": true,
+  "projects": [
+    {
+      "displayName": "application-example",
+      "clearMocks": true,
+      "rootDir": "./apps/application-example/",
+      "testRegex": "\\.e2e-spec\\.ts$",
+      "transform": {
+        "^.+\\.(t|j)sx?$": "@swc/jest"
+      },
+      "moduleNameMapper": {
+        "^@common(.*)$": "<rootDir>/src/common/$1",
+        "^@libs(.*)$": "<rootDir>/../../libs/$1",
+      }
+    }
+  ],
+  "testEnvironment": "node"
+}

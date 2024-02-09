@@ -1,0 +1,45 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "clearMocks": true,
+  "projects": [
+    {
+      "displayName": "application-example",
+      "clearMocks": true,
+      "rootDir": "./apps/application-example/",
+      "testRegex": "\\.e2e-spec\\.ts$",
+      "transform": {
+        "^.+\\.(t|j)sx?$": "@swc/jest"
+      },
+      "moduleNameMapper": {
+        "^@common(.*)$": "<rootDir>/src/common/$1",
+        "^@libs(.*)$": "<rootDir>/../../libs/$1"
+      }
+    },
+    {
+      "displayName": "libs",
+      "rootDir": "./libs/",
+      "transform": {
+        "^.+\\.(t|j)sx?$": "@swc/jest"
+      },
+      "moduleNameMapper": {
+        "^@libs(.*)$": "<rootDir>/$1",
+        "^@common(.*)$": "<rootDir>/common/$1"
+      }
+    }
+  ],
+  "testEnvironment": "node",
+  "reporters": [
+    "default",
+    [
+      "jest-html-reporter",
+      {
+        "outputPath": "./reports/test-report.html",
+        "pageTitle": "Tests Report",
+        "includeFailureMsg": true,
+        "openReport": true,
+        "expand": true
+      }
+    ]
+  ]
+}
