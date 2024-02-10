@@ -2,6 +2,10 @@
 
 Olá, bom dia, aqui será apresentado uma documentação relativa a estrutura de todas as aplicações que forem criadas dentro desse monorepo, o objetivo dessa documentação é expôr de maneira clara e objetiva o funcionamento da aplicação bem como sua estrutura. Os padrões aqui impostos seguem conceitos como Clean Code, Clean Architecture, SOLID, DRY, KISS e Design Patterns. Essa documentação também tem correlação ao [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) proposto pelo Google. Uma outra fonte de inspiração foi o repositório [Clean Code Typescript](https://github.com/labs42io/clean-code-typescript), que adapta conceitos conhecidos do Clean Code para o Typescript.
 
+## Swagger
+
+Rota do swagger de todas as aplicações do monorepo é sempre o virtual host definido no docker-compose com o sufixo "/docs" no final!
+
 ## IMPORTANTE
 
 Para rodar esse projeto é necessário o mesmo estar dentro da pasta projects no repositório [docker-development](https://github.com/ArkbraveNunes/docker-development.git) para ser executado, para mais informações, favor conferir o Readme do docker-development!
@@ -29,6 +33,7 @@ Principais ferramentas utilizadas:
 - [Lint Staged](https://eslint.org/https://www.npmjs.com/package/lint-staged)
 - [Jest](https://jestjs.io/pt-BR/)
 - [Jest Mock Extended](https://www.npmjs.com/package/jest-mock-extended)
+- [Compodoc](https://compodoc.app)
 
 ## Estrutura
 
@@ -80,6 +85,8 @@ O Projeto segue o seguinte modelo de orgranização de arquivos e pastas:
   - /repository: Aqui se localiza as queries executadas no banco de dados;
   - /adapter: Diretório que compreende conexões com provedores de terceiros ou outras aplicações em diferentes contextos;
   - /schema: Local onde são armazenadas as Tabelas e/ou Schemas/Models relativas ao Banco de Dados;
+
+CASO QUEIRA UMA VISUALIZAÇÃO MAIS DIDÁTICA VOCÊ PODE RODAR O COMPODOC COM O COMANDO compodoc:build SEGUIDO DE UM compodoc:run E ACESSAR VIA http://localhost:4000 UMA INTERFACE VISUAL COM A ESTRUTURAÇÃO DE TODOS OS MÓDULOS DO PROJETO!
 
 ## Testes
 

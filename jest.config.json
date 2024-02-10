@@ -13,7 +13,8 @@
       "moduleNameMapper": {
         "^@applicationExample(.*)$": "<rootDir>/src/module/application-example/$1",
         "^@common(.*)$": "<rootDir>/src/common/$1",
-        "^@libs(.*)$": "<rootDir>/../../libs/$1"
+        "^@libs(.*)$": "<rootDir>/../../libs/$1",
+        "^@test(.*)$": "<rootDir>/test/$1"
       }
     },
     {

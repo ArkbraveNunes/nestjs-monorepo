@@ -132,6 +132,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/request-context/tsconfig.lib.json"
       }
+    },
+    "validator": {
+      "type": "library",
+      "root": "libs/validator",
+      "entryFile": "index",
+      "sourceRoot": "libs/validator/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/validator/tsconfig.lib.json"
+      }
+    },
+    "cryptograph-data": {
+      "type": "library",
+      "root": "libs/cryptograph-data",
+      "entryFile": "index",
+      "sourceRoot": "libs/cryptograph-data/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/cryptograph-data/tsconfig.lib.json"
+      }
     }
   }
 }
