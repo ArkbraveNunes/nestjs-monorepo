@@ -10,7 +10,6 @@ describe('UserEntity', () => {
       profile: {
         name: faker.person.fullName(),
         email: faker.internet.email(),
-        isNational: true,
         gender: USER_GENDER.MAN,
         password: faker.internet.password(),
         cpf: cpf.generate(false),

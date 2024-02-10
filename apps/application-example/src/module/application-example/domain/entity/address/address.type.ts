@@ -1,6 +1,5 @@
 export type AddressProps = {
   id: string;
-  alias?: string;
   street?: string;
   number?: string;
   complement?: string;

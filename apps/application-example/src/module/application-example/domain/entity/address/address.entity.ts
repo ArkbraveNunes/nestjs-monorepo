@@ -5,7 +5,6 @@ import { AddressProps } from '@applicationExample/domain/entity';
 
 export type CreateAddressProps = Pick<
   AddressProps,
-  | 'alias'
   | 'city'
   | 'complement'
   | 'country'
@@ -52,7 +51,6 @@ export class AddressEntity extends Entity {
   static fromDbToEntity(props: DbAddressProps): AddressEntity {
     return new AddressEntity({
       id: props._id.toString(),
-      alias: props.alias,
       street: props.street,
       number: props.number,
       complement: props.complement,

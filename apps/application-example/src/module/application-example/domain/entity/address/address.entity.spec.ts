@@ -9,7 +9,6 @@ describe('AddressEntity', () => {
       city: faker.location.city(),
       state: faker.location.state(),
       country: faker.location.country(),
-      alias: faker.person.lastName(),
       complement: faker.location.cardinalDirection(),
       district: faker.location.streetAddress(),
       number: faker.location.buildingNumber(),
@@ -25,7 +24,6 @@ describe('AddressEntity', () => {
     expect(address.city).toBeDefined();
     expect(address.state).toBeDefined();
     expect(address.country).toBeDefined();
-    expect(address.alias).toBeDefined();
     expect(address.complement).toBeDefined();
     expect(address.district).toBeDefined();
     expect(address.number).toBeDefined();
