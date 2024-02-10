@@ -10,9 +10,15 @@ import { LoggerModule } from '@libs/logger';
 import { HealthCheckModule } from '@libs/healthcheck';
 import { TenantIdHeaderInputDto } from '@libs/common-dto';
 import { CommonModule } from '@common/common.module';
+import { ApplicationExampleModule } from '@applicationExample/application.example.module';
 
 @Module({
-  imports: [HealthCheckModule, LoggerModule, CommonModule],
+  imports: [
+    HealthCheckModule,
+    LoggerModule,
+    CommonModule,
+    ApplicationExampleModule,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

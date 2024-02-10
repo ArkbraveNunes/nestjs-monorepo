@@ -5,6 +5,9 @@
     "baseUrl": "./",
     "outDir": "../../dist/apps/application-example",
     "paths": {
+      "@applicationExample/*": [
+        "./src/module/application-example/*"
+      ],
       "@common/*": [
         "./src/common/*"
       ],
