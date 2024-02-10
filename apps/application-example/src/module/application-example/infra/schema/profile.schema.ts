@@ -15,11 +15,6 @@ export class ProfileSchema implements ProfileProps {
   name: string;
 
   @Prop({
-    default: null,
-  })
-  isNational: boolean;
-
-  @Prop({
     required: true,
   })
   cpf: string;

@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 
+import { AddressProps } from '@applicationExample/domain/entity';
+
 @Schema({
   timestamps: false,
   versionKey: false,
@@ -23,13 +25,8 @@ class Coordinates {
   timestamps: true,
   versionKey: false,
 })
-export class AddressSchema {
+export class AddressSchema implements Omit<AddressProps, 'id'> {
   _id: Types.ObjectId;
-
-  @Prop({
-    default: '',
-  })
-  alias?: string;
 
   @Prop({
     default: '',
