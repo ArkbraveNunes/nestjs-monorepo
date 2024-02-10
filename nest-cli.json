@@ -123,6 +123,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/config/tsconfig.lib.json"
       }
+    },
+    "request-context": {
+      "type": "library",
+      "root": "libs/request-context",
+      "entryFile": "index",
+      "sourceRoot": "libs/request-context/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/request-context/tsconfig.lib.json"
+      }
     }
   }
 }

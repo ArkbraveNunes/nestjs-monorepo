@@ -7,17 +7,18 @@
       "displayName": "application-example",
       "clearMocks": true,
       "rootDir": "./apps/application-example/",
-      "testRegex": "\\.e2e-spec\\.ts$",
       "transform": {
         "^.+\\.(t|j)sx?$": "@swc/jest"
       },
       "moduleNameMapper": {
+        "^@applicationExample(.*)$": "<rootDir>/src/module/application-example/$1",
         "^@common(.*)$": "<rootDir>/src/common/$1",
         "^@libs(.*)$": "<rootDir>/../../libs/$1"
       }
     },
     {
       "displayName": "libs",
+      "clearMocks": true,
       "rootDir": "./libs/",
       "transform": {
         "^.+\\.(t|j)sx?$": "@swc/jest"
