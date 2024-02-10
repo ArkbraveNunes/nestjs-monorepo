@@ -2,20 +2,20 @@
 
 Olá, bom dia, aqui será apresentado uma documentação relativa a estrutura de todas as aplicações que forem criadas dentro desse monorepo, o objetivo dessa documentação é expôr de maneira clara e objetiva o funcionamento da aplicação bem como sua estrutura. Os padrões aqui impostos seguem conceitos como Clean Code, Clean Architecture, SOLID, DRY, KISS e Design Patterns. Essa documentação também tem correlação ao [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) proposto pelo Google. Uma outra fonte de inspiração foi o repositório [Clean Code Typescript](https://github.com/labs42io/clean-code-typescript), que adapta conceitos conhecidos do Clean Code para o Typescript.
 
-## Swagger
-
-Rota do swagger de todas as aplicações do monorepo é sempre o virtual host definido no docker-compose com o sufixo "/docs" no final!
-
 ## IMPORTANTE
 
 Para rodar esse projeto é necessário o mesmo estar dentro da pasta projects no repositório [docker-development](https://github.com/ArkbraveNunes/docker-development.git) para ser executado, para mais informações, favor conferir o Readme do docker-development!
+
+## Swagger
+
+Rota do swagger de todas as aplicações do monorepo é sempre o virtual host definido no docker-compose dentro da pasta .docker do [docker-development](https://github.com/ArkbraveNunes/docker-development.git) com o sufixo "/docs" no final!
 
 ## Libs
 
 Para baixar todas as libs do projeto, rodar o comando abaixo
 
 ```shell
-git submodule init
+git submodule update --init
 ```
 
 ## Principais Ferramentas
@@ -34,6 +34,7 @@ Principais ferramentas utilizadas:
 - [Jest](https://jestjs.io/pt-BR/)
 - [Jest Mock Extended](https://www.npmjs.com/package/jest-mock-extended)
 - [Compodoc](https://compodoc.app)
+- [docker](https://docs.docker.com/engine/install/)
 
 ## Estrutura
 
