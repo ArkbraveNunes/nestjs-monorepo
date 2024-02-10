@@ -6,6 +6,7 @@ import database from './config/database.config';
 import { AppConfigModule } from '@libs/config';
 import { RequestContextModule } from '@libs/request-context';
 import { MongoDatabaseModule } from '@libs/database';
+import { CryptographDataModule } from '@libs/cryptograph-data';
 import { REQUEST_CONTEXT } from './enum';
 
 @Module({
@@ -36,8 +37,13 @@ import { REQUEST_CONTEXT } from './enum';
         },
       ],
     }),
+    CryptographDataModule.cryptographConfig({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        numberOfSalt: configService.get('cryptographPasswordSalt'),
+      }),
+    }),
   ],
-  providers: [],
-  exports: [AppConfigModule, RequestContextModule],
 })
 export class CommonModule {}

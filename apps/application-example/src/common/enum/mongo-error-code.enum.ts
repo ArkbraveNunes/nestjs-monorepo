@@ -1,0 +1,3 @@
+export enum MONGO_ERROR_CODE {
+  DUPLICATE_KEY = 11000,
+}
