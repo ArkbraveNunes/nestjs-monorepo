@@ -4,8 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import app from './config/app.config';
 import database from './config/database.config';
 import { AppConfigModule } from '@libs/config';
-import { RequestContextModule } from '@common/request-context';
+import { RequestContextModule } from '@libs/request-context';
 import { MongoDatabaseModule } from '@libs/database';
+import { REQUEST_CONTEXT } from './enum';
 
 @Module({
   imports: [
@@ -27,7 +28,14 @@ import { MongoDatabaseModule } from '@libs/database';
       }),
     }),
     MongoDatabaseModule.mongoDBInit(),
-    RequestContextModule,
+    RequestContextModule.setParameters({
+      parameters: [
+        {
+          name: REQUEST_CONTEXT.TENANT_ID,
+          property: 'headers',
+        },
+      ],
+    }),
   ],
   providers: [],
   exports: [AppConfigModule, RequestContextModule],

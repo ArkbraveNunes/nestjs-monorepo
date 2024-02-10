@@ -1,0 +1,6 @@
+export enum USER_GENDER {
+  MAN = 'MAN',
+  WOMAN = 'WOMAN',
+  NON_BINARY = 'NON_BINARY',
+  NO_RESPONSE = 'NO_RESPONSE',
+}
