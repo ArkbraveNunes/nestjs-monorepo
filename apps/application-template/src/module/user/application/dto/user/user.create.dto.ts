@@ -52,7 +52,7 @@ export class UserCreateInputDto {
   birthDate: Date;
 
   @ApiProperty({
-    example: `+${faker.helpers.fromRegExp(/55[0-9]{2}9[0-9]{8}/)}`,
+    example: `+${faker.helpers.fromRegExp(/55[1-9]{2}9[1-9]{8}/)}`,
   })
   @IsDefined({ message: MESSAGES_ERRORS.PHONE_NUMBER_IS_REQUIRED })
   @IsMobilePhone(
