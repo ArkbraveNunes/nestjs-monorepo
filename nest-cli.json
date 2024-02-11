@@ -7,13 +7,13 @@
   },
   "monorepo": true,
   "projects": {
-    "application-example": {
+    "application-template": {
       "type": "application",
-      "root": "apps/application-example",
+      "root": "apps/application-template",
       "entryFile": "main",
-      "sourceRoot": "apps/application-example/src",
+      "sourceRoot": "apps/application-template/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/application-example/tsconfig.json"
+        "tsConfigPath": "apps/application-template/tsconfig.json"
       }
     },
     "database": {

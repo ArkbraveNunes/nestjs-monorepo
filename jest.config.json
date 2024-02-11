@@ -4,14 +4,14 @@
   "clearMocks": true,
   "projects": [
     {
-      "displayName": "application-example",
+      "displayName": "application-template",
       "clearMocks": true,
-      "rootDir": "./apps/application-example/",
+      "rootDir": "./apps/application-template/",
       "transform": {
         "^.+\\.(t|j)sx?$": "@swc/jest"
       },
       "moduleNameMapper": {
-        "^@applicationExample(.*)$": "<rootDir>/src/module/application-example/$1",
+        "^@user(.*)$": "<rootDir>/src/module/user/$1",
         "^@common(.*)$": "<rootDir>/src/common/$1",
         "^@libs(.*)$": "<rootDir>/../../libs/$1",
         "^@test(.*)$": "<rootDir>/test/$1"

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "baseUrl": "./",
+    "outDir": "../../dist/apps/application-template",
+    "paths": {
+      "@user/*": [
+        "./src/module/user/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
+      ],
+      "@libs/*": [
+        "../../libs/*"
+      ],
+      "@test/*": [
+        "./test/*"
+      ],
+    }
+  }
+}
