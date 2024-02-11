@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import {
   ConflictException,
+  InternalServerErrorException,
+  NotFoundException,
   //InternalServerErrorException,
 } from '@nestjs/common';
 //import { MockProxy, mock } from 'jest-mock-extended';
@@ -9,6 +11,8 @@ import {
 import { MongoUserRepository } from '@user/infra/repository';
 import { userSchema, UserSchema } from '@user/infra/schema';
 import { mockedUserEntity } from '@test/mock';
+import { MESSAGES_ERRORS } from '@common/enum';
+import { faker } from '@faker-js/faker';
 //import { MESSAGES_ERRORS } from '@common/enum';
 
 describe('MongoUserRepository', () => {
@@ -16,7 +20,7 @@ describe('MongoUserRepository', () => {
   let inMemoryMongoServer: MongoMemoryServer;
   let mockedUserModel: mongoose.Model<UserSchema>;
   let mongoConnection: mongoose.Connection;
-  //let expectedMongoError: InternalServerErrorException;
+  let expectedMongoError: InternalServerErrorException;
 
   beforeAll(async () => {
     inMemoryMongoServer = await MongoMemoryServer.create();
@@ -24,9 +28,9 @@ describe('MongoUserRepository', () => {
       .connection;
     mockedUserModel = mongoConnection.model(UserSchema.name, userSchema);
 
-    /*expectedMongoError = new InternalServerErrorException(
+    expectedMongoError = new InternalServerErrorException(
       MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
-    );*/
+    );
   });
 
   beforeEach(async () => {
@@ -48,7 +52,7 @@ describe('MongoUserRepository', () => {
   });
 
   describe('save()', () => {
-    it('should save the User correctly', async () => {
+    it('should save the user correctly', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       const savedUser = await mockedUserModel.findOne({
@@ -58,7 +62,7 @@ describe('MongoUserRepository', () => {
       expect(savedUser.id).toBe(mockedUserEntity.id);
     });
 
-    it('should throw a ConflictException if email, phoneNumber or document already exists on database', async () => {
+    it('should throw a ConflictException if email, phoneNumber or cpf already exists on database', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       await mongoUserRepository
@@ -70,15 +74,26 @@ describe('MongoUserRepository', () => {
     });
   });
 
-  /*describe('findById()', () => {
-    it('should call findById - return success', async () => {
-      await mongoUserRepository.save(mockedUserEntity);
+  describe('findById()', () => {
+    it('should call findById - return user', async () => {
+      await mongoUserRepository.create(mockedUserEntity);
 
       const actualUser = await mongoUserRepository.findById(
         mockedUserEntity.id,
       );
 
       expect(actualUser.id).toEqual(mockedUserEntity.id);
+    });
+
+    it('should call findById - throw not found error', async () => {
+      await mongoUserRepository.create(mockedUserEntity);
+
+      await mongoUserRepository
+        .findById(faker.database.mongodbObjectId().toString())
+        .catch((error) => {
+          expect(error).toBeInstanceOf(NotFoundException);
+        })
+        .then((result) => expect(result).toBe(undefined));
     });
 
     it('should call findById - database error', async () => {
@@ -92,5 +107,5 @@ describe('MongoUserRepository', () => {
           expect(actualError).toBe(expectedMongoError);
         });
     });
-  });*/
+  });
 });

@@ -1,4 +1,6 @@
-import { CreateRepository } from '@libs/contract';
+import { CreateRepository, FindByIdRepository } from '@libs/contract';
 import { UserEntity } from '@user/domain/entity';
 
-export interface UserRepositoryContract extends CreateRepository<UserEntity> {}
+export interface UserRepositoryContract
+  extends CreateRepository<UserEntity>,
+    FindByIdRepository<UserEntity> {}

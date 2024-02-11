@@ -32,7 +32,7 @@ import { REQUEST_CONTEXT } from './enum';
     RequestContextModule.setParameters({
       parameters: [
         {
-          name: REQUEST_CONTEXT.TENANT_ID,
+          name: REQUEST_CONTEXT.TENANT,
           property: 'headers',
         },
       ],

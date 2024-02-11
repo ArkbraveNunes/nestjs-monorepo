@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -36,5 +40,17 @@ export class MongoUserRepository implements UserRepositoryContract {
         ? new ConflictException(MESSAGES_ERRORS.USER_CONFLICT)
         : err;
     });
+  }
+
+  async findById(id: string): Promise<UserEntity> {
+    const docResult = await this.userModel
+      .findOne({ _id: id, ...this.onlyActives })
+      .lean();
+
+    if (!docResult) {
+      throw new NotFoundException(MESSAGES_ERRORS.USER_DOES_NOT_EXIST);
+    }
+
+    return UserEntity.fromDbToEntity(docResult);
   }
 }

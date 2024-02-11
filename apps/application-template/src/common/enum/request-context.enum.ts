@@ -1,3 +1,4 @@
 export enum REQUEST_CONTEXT {
-  TENANT_ID = 'tenantId',
+  TENANT = 'tenant',
+  USER_ID = 'userId',
 }

@@ -87,7 +87,19 @@ O Projeto segue o seguinte modelo de orgranização de arquivos e pastas:
   - /adapter: Diretório que compreende conexões com provedores de terceiros ou outras aplicações em diferentes contextos;
   - /schema: Local onde são armazenadas as Tabelas e/ou Schemas/Models relativas ao Banco de Dados;
 
-CASO QUEIRA UMA VISUALIZAÇÃO MAIS DIDÁTICA VOCÊ PODE RODAR O COMPODOC COM O COMANDO compodoc:build SEGUIDO DE UM compodoc:run E ACESSAR VIA http://localhost:4000 UMA INTERFACE VISUAL COM A ESTRUTURAÇÃO DE TODOS OS MÓDULOS DO PROJETO!
+CASO QUEIRA UMA VISUALIZAÇÃO MAIS DIDÁTICA VOCÊ PODE RODAR O COMPODOC COM O COMANDO:
+
+```shell
+npm run compodoc:build
+```
+
+SEGUIDO DE UM:
+
+```shell
+npm run compodoc:run
+```
+
+E ACESSAR VIA http://localhost:4000 UMA INTERFACE VISUAL COM A ESTRUTURAÇÃO DE TODOS OS MÓDULOS DO PROJETO!
 
 ## Testes
 
