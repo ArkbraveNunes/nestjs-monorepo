@@ -8,9 +8,13 @@ import { RequestContextModule } from '@libs/request-context';
 import { MongoDatabaseModule } from '@libs/database';
 import { CryptographDataModule } from '@libs/cryptograph-data';
 import { REQUEST_CONTEXT } from './enum';
+import { LoggerModule } from '@libs/logger';
+import { MomentModule } from '@libs/moment';
 
 @Module({
   imports: [
+    LoggerModule,
+    MomentModule,
     AppConfigModule.injectConfig({
       config: [app, database],
     }),
