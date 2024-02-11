@@ -12,7 +12,7 @@ import { CryptographDataService } from '@libs/cryptograph-data';
 
 describe('UserCreateService', () => {
   let service: UserCreateService;
-  let customerRepository: MockProxy<UserRepositoryContract>;
+  let userRepository: MockProxy<UserRepositoryContract>;
   let cryptographDataService: MockProxy<CryptographDataService>;
 
   const userCreateServiceInputDto: UserCreateServiceInputDto = {
@@ -21,15 +21,15 @@ describe('UserCreateService', () => {
   };
 
   beforeEach(() => {
-    customerRepository = mock();
-    customerRepository.create.mockResolvedValue(void 0);
+    userRepository = mock();
+    userRepository.create.mockResolvedValue(void 0);
 
     cryptographDataService = mock();
     cryptographDataService.encryptData.mockResolvedValue(
       mockedUserEntity.profile.password,
     );
 
-    service = new UserCreateService(customerRepository, cryptographDataService);
+    service = new UserCreateService(userRepository, cryptographDataService);
   });
 
   it('status 200 - success', async () => {
@@ -39,7 +39,7 @@ describe('UserCreateService', () => {
     expect(cryptographDataService.encryptData).toHaveBeenCalledWith(
       userCreateServiceInputDto.password,
     );
-    expect(customerRepository.create).toHaveBeenCalledTimes(1);
+    expect(userRepository.create).toHaveBeenCalledTimes(1);
     expect(actualResult.id).toBeDefined();
     expect(
       actualResult.message.includes(MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS),
@@ -60,7 +60,7 @@ describe('UserCreateService', () => {
   });
 
   it('error status 500 - database - internal server error', async () => {
-    customerRepository.create.mockRejectedValue(
+    userRepository.create.mockRejectedValue(
       new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
     );
 

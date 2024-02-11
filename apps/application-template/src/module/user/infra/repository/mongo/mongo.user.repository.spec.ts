@@ -1,19 +1,16 @@
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import {
   ConflictException,
   InternalServerErrorException,
   NotFoundException,
-  //InternalServerErrorException,
 } from '@nestjs/common';
-//import { MockProxy, mock } from 'jest-mock-extended';
+import mongoose from 'mongoose';
+import { faker } from '@faker-js/faker/locale/pt_BR';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 import { MongoUserRepository } from '@user/infra/repository';
 import { userSchema, UserSchema } from '@user/infra/schema';
 import { mockedUserEntity } from '@test/mock';
 import { MESSAGES_ERRORS } from '@common/enum';
-import { faker } from '@faker-js/faker';
-//import { MESSAGES_ERRORS } from '@common/enum';
 
 describe('MongoUserRepository', () => {
   let mongoUserRepository: MongoUserRepository;
@@ -51,8 +48,8 @@ describe('MongoUserRepository', () => {
     }
   });
 
-  describe('save()', () => {
-    it('should save the user correctly', async () => {
+  describe('create()', () => {
+    it('should call create - success - create user', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       const savedUser = await mockedUserModel.findOne({
@@ -62,7 +59,7 @@ describe('MongoUserRepository', () => {
       expect(savedUser.id).toBe(mockedUserEntity.id);
     });
 
-    it('should throw a ConflictException if email, phoneNumber or cpf already exists on database', async () => {
+    it('should call create - error - user already exist', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       await mongoUserRepository
@@ -75,7 +72,7 @@ describe('MongoUserRepository', () => {
   });
 
   describe('findById()', () => {
-    it('should call findById - return user', async () => {
+    it('should call findById - success - return user', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       const actualUser = await mongoUserRepository.findById(
@@ -85,7 +82,7 @@ describe('MongoUserRepository', () => {
       expect(actualUser.id).toEqual(mockedUserEntity.id);
     });
 
-    it('should call findById - throw not found error', async () => {
+    it('should call findById - error - user not found', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
       await mongoUserRepository
@@ -96,7 +93,7 @@ describe('MongoUserRepository', () => {
         .then((result) => expect(result).toBe(undefined));
     });
 
-    it('should call findById - database error', async () => {
+    it('should call findById - error - database error', async () => {
       jest.spyOn(mockedUserModel, 'findOne').mockReturnValueOnce({
         lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
       } as any);
@@ -105,7 +102,47 @@ describe('MongoUserRepository', () => {
         .findById(mockedUserEntity.id)
         .catch((actualError) => {
           expect(actualError).toBe(expectedMongoError);
-        });
+        })
+        .then((result) => expect(result).toBe(undefined));
+    });
+  });
+
+  describe('findByEmail()', () => {
+    it('should call findByEmail - success - return user', async () => {
+      await mongoUserRepository.create(mockedUserEntity);
+
+      const actualCustomer = await mongoUserRepository.findByEmail({
+        email: mockedUserEntity.profile.email,
+      });
+
+      expect(actualCustomer.profile.email).toEqual(
+        mockedUserEntity.profile.email,
+      );
+    });
+
+    it('should call findByEmail - success - return null', async () => {
+      await mongoUserRepository.create(mockedUserEntity);
+
+      const actualCustomer = await mongoUserRepository.findByEmail({
+        email: faker.internet.email(),
+      });
+
+      expect(actualCustomer).toEqual(null);
+    });
+
+    it('should call findByEmail - error - database error', async () => {
+      jest.spyOn(mockedUserModel, 'findOne').mockReturnValueOnce({
+        lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
+      } as any);
+
+      await mongoUserRepository
+        .findByEmail({
+          email: mockedUserEntity.profile.email,
+        })
+        .catch((actualError) => {
+          expect(actualError).toBe(expectedMongoError);
+        })
+        .then((result) => expect(result).toBe(undefined));
     });
   });
 });

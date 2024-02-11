@@ -22,6 +22,9 @@ import { MongoUserRepository } from '@user/infra/repository';
     UserCreateService,
     { provide: REPOSITORY.USER_REPOSITORY, useClass: MongoUserRepository },
   ],
-  exports: [MongooseModule],
+  exports: [
+    MongooseModule,
+    { provide: REPOSITORY.USER_REPOSITORY, useClass: MongoUserRepository },
+  ],
 })
-export class ApplicationExampleModule {}
+export class UserModule {}

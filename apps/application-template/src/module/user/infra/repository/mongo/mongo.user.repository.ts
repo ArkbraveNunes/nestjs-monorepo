@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 
 import { COLLECTION, MESSAGES_ERRORS, MONGO_ERROR_CODE } from '@common/enum';
 import { UserSchema } from '@user/infra/schema';
-import { UserEntity } from '@user/domain/entity';
+import { ProfileProps, UserEntity } from '@user/domain/entity';
 import { UserRepositoryContract } from '@user/domain/contract';
 
 @Injectable()
@@ -52,5 +52,16 @@ export class MongoUserRepository implements UserRepositoryContract {
     }
 
     return UserEntity.fromDbToEntity(docResult);
+  }
+
+  async findByEmail({
+    email,
+  }: Pick<ProfileProps, 'email'>): Promise<UserEntity> {
+    const docResult = await this.userModel
+      .findOne({
+        'data.profile.email': email,
+      })
+      .lean();
+    return docResult ? UserEntity.fromDbToEntity(docResult) : null;
   }
 }

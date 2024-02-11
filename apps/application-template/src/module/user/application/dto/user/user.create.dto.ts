@@ -19,6 +19,7 @@ import {
 import { CPFValidator, PasswordValidator } from '@libs/validator';
 import { Type } from 'class-transformer';
 import { AddressCreateInputDto } from '@user/application/dto';
+import { UserCreateServiceOutputDto } from '@user/domain/service';
 
 export class UserCreateInputDto {
   @ApiProperty({ example: faker.person.fullName() })
@@ -88,7 +89,7 @@ export class UserCreateOutputDto {
   @ApiProperty({ example: [MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS] })
   message: MESSAGES_SUCCESS[];
 
-  constructor(userCreateServiceOutput: any) {
+  constructor(userCreateServiceOutput: UserCreateServiceOutputDto) {
     Object.assign(this, userCreateServiceOutput);
   }
 }
@@ -96,8 +97,8 @@ export class UserCreateOutputDto {
 export class UserCreateBadRequestOutputDto extends BadRequestErrorOutputDto {
   @ApiProperty({
     example: [
-      MESSAGES_ERRORS.TENANT_ID_IS_INVALID,
-      MESSAGES_ERRORS.TENANT_ID_IS_REQUIRED,
+      MESSAGES_ERRORS.TENANT_IS_INVALID,
+      MESSAGES_ERRORS.TENANT_IS_REQUIRED,
       MESSAGES_ERRORS.NAME_IS_REQUIRED,
       MESSAGES_ERRORS.NAME_IS_INVALID,
       MESSAGES_ERRORS.EMAIL_IS_REQUIRED,
