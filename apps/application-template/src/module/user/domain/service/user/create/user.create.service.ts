@@ -4,13 +4,17 @@ import {
   UserCreateServiceInputDto,
   UserCreateServiceOutputDto,
 } from '@user/domain/service';
+import { Service } from '@libs/contract';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { MESSAGES_SUCCESS, REPOSITORY } from '@common/enum';
 import { UserEntity } from '@user/domain/entity';
 import { CryptographDataService } from '@libs/cryptograph-data';
 
 Injectable();
-export class UserCreateService {
+export class UserCreateService
+  implements
+    Service<UserCreateServiceInputDto, Promise<UserCreateServiceOutputDto>>
+{
   constructor(
     @Inject(REPOSITORY.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryContract,

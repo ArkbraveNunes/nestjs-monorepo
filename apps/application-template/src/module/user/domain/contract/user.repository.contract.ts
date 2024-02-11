@@ -5,4 +5,8 @@ export interface UserRepositoryContract
   extends CreateRepository<UserEntity>,
     FindByIdRepository<UserEntity> {
   findByEmail({ email }: Pick<ProfileProps, 'email'>): Promise<UserEntity>;
+  updateUserProfile(
+    userId: string,
+    profile: Partial<ProfileProps>,
+  ): Promise<ProfileProps>;
 }
