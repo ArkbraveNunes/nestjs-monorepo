@@ -5,6 +5,9 @@
     "baseUrl": "./",
     "outDir": "../../dist/apps/application-template",
     "paths": {
+      "@auth/*": [
+        "./src/module/auth/*"
+      ],
       "@user/*": [
         "./src/module/user/*"
       ],

@@ -6,19 +6,14 @@ import {
 } from '@nestjs/common';
 
 import { HeadersValidator } from '@libs/middleware';
-import { LoggerModule } from '@libs/logger';
 import { HealthCheckModule } from '@libs/healthcheck';
 import { TenantHeaderInputDto } from '@libs/common-dto';
 import { CommonModule } from '@common/common.module';
-import { ApplicationExampleModule } from '@user/application.example.module';
+import { UserModule } from '@user/user.module';
+import { AuthModule } from '@auth/auth.module';
 
 @Module({
-  imports: [
-    HealthCheckModule,
-    LoggerModule,
-    CommonModule,
-    ApplicationExampleModule,
-  ],
+  imports: [HealthCheckModule, CommonModule, UserModule, AuthModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
