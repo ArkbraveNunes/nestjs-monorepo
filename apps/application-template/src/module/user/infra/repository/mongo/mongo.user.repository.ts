@@ -64,4 +64,29 @@ export class MongoUserRepository implements UserRepositoryContract {
       .lean();
     return docResult ? UserEntity.fromDbToEntity(docResult) : null;
   }
+
+  async updateUserProfile(
+    userId: string,
+    profile: Partial<ProfileProps>,
+  ): Promise<ProfileProps> {
+    const query = {};
+
+    Object.keys(profile).forEach((key) => {
+      const queryKey = `data.profile.${key}`;
+      query[queryKey] = profile[key];
+    });
+
+    const docResult = await this.userModel
+      .findOneAndUpdate(
+        {
+          _id: userId,
+          ...this.onlyActives,
+        },
+        query,
+        { new: true },
+      )
+      .lean();
+
+    return UserEntity.fromDbToEntity(docResult).profile;
+  }
 }

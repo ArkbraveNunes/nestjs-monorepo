@@ -7,10 +7,10 @@ import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { MongoUserRepository } from '@user/infra/repository';
-import { userSchema, UserSchema } from '@user/infra/schema';
 import { mockedUserEntity } from '@test/mock';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { userSchema, UserSchema } from '@user/infra/schema';
+import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
+import { MongoUserRepository } from '@user/infra/repository';
 
 describe('MongoUserRepository', () => {
   let mongoUserRepository: MongoUserRepository;
@@ -143,6 +143,38 @@ describe('MongoUserRepository', () => {
           expect(actualError).toBe(expectedMongoError);
         })
         .then((result) => expect(result).toBe(undefined));
+    });
+  });
+
+  describe('updateUserProfile()', () => {
+    it('should call updateUserProfile - success - return profile', async () => {
+      await mongoUserRepository.create(mockedUserEntity);
+
+      const actualCustomer = await mongoUserRepository.updateUserProfile(
+        mockedUserEntity.id,
+        {
+          gender: USER_GENDER.NON_BINARY,
+        },
+      );
+
+      expect(actualCustomer).toEqual({
+        ...mockedUserEntity.profile,
+        gender: USER_GENDER.NON_BINARY,
+      });
+    });
+
+    it('should call updateUserProfile - error - database error', async () => {
+      jest.spyOn(mockedUserModel, 'findOneAndUpdate').mockReturnValueOnce({
+        lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
+      } as any);
+
+      await mongoUserRepository
+        .updateUserProfile(mockedUserEntity.id, {
+          gender: USER_GENDER.NON_BINARY,
+        })
+        .catch((actualError) => {
+          expect(actualError).toBe(expectedMongoError);
+        });
     });
   });
 });
