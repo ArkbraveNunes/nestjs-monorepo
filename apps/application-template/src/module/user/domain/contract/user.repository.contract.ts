@@ -1,5 +1,5 @@
 import { CreateRepository, FindByIdRepository } from '@libs/contract';
-import { ProfileProps, UserEntity } from '@user/domain/entity';
+import { AddressProps, ProfileProps, UserEntity } from '@user/domain/entity';
 
 export interface UserRepositoryContract
   extends CreateRepository<UserEntity>,
@@ -9,4 +9,5 @@ export interface UserRepositoryContract
     userId: string,
     profile: Partial<ProfileProps>,
   ): Promise<ProfileProps>;
+  createAddress(userId: string, address: AddressProps): Promise<AddressProps[]>;
 }
