@@ -10,10 +10,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 
-import {
-  BadRequestErrorOutputDto,
-  UnauthorizedErrorOutputDto,
-} from '@libs/common-dto';
+import { BadRequestErrorOutputDto } from '@libs/common-dto';
 import { MESSAGES_ERRORS, MESSAGES_SUCCESS, USER_GENDER } from '@common/enum';
 
 export class UserUpdateInputDto {
@@ -71,13 +68,6 @@ export class UserUpdateBadRequestOutputDto extends BadRequestErrorOutputDto {
       MESSAGES_ERRORS.PHONE_NUMBER_IS_INVALID,
       MESSAGES_ERRORS.GENDER_IS_INVALID,
     ],
-  })
-  message: MESSAGES_ERRORS[];
-}
-
-export class UserUpdateUnauthorizedOutputDto extends UnauthorizedErrorOutputDto {
-  @ApiProperty({
-    example: [MESSAGES_ERRORS.USER_UNAUTHORIZED],
   })
   message: MESSAGES_ERRORS[];
 }

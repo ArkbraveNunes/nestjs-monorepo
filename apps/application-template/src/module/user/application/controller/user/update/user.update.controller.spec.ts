@@ -28,7 +28,7 @@ describe('UserUpdateController', () => {
 
   describe('update', () => {
     it('should call UserUpdateService - success', async () => {
-      await controller.update(userUpdateInputDto);
+      await controller.userUpdate(userUpdateInputDto);
 
       expect(userUpdateCustomerService.execute).toHaveBeenCalledTimes(1);
     });
@@ -38,7 +38,7 @@ describe('UserUpdateController', () => {
         new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
       );
 
-      await controller.update(userUpdateInputDto).catch((actualError) => {
+      await controller.userUpdate(userUpdateInputDto).catch((actualError) => {
         expect(userUpdateCustomerService.execute).toHaveBeenCalledTimes(1);
         expect(actualError).toBeInstanceOf(InternalServerErrorException);
       });

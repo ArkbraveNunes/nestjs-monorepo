@@ -37,8 +37,8 @@ export class UserCreateController {
     type: UserCreateOutputDto,
   })
   @ApiHeaders([...tenantHeaderOptions])
-  @Post()
-  async create(
+  @Post('/user')
+  async userCreate(
     @Body() userCreateInputDto: UserCreateInputDto,
   ): Promise<UserCreateOutputDto> {
     return await this.userCreateService

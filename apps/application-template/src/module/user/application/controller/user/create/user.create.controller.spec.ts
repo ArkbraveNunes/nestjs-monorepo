@@ -31,7 +31,7 @@ describe('UserCreateController', () => {
 
   describe('create', () => {
     it('should call UserCreateService - success', async () => {
-      await controller.create(userCreateInputDto);
+      await controller.userCreate(userCreateInputDto);
 
       expect(mockedUserCreateService.execute).toHaveBeenCalledTimes(1);
     });
@@ -41,7 +41,7 @@ describe('UserCreateController', () => {
         new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
       );
 
-      await controller.create(userCreateInputDto).catch((actualError) => {
+      await controller.userCreate(userCreateInputDto).catch((actualError) => {
         expect(mockedUserCreateService.execute).toHaveBeenCalledTimes(1);
         expect(actualError).toBeInstanceOf(InternalServerErrorException);
       });

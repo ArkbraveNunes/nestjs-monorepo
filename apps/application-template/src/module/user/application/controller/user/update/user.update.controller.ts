@@ -21,7 +21,6 @@ import {
   UserUpdateBadRequestOutputDto,
   UserUpdateInputDto,
   UserUpdateOutputDto,
-  UserUpdateUnauthorizedOutputDto,
 } from '@user/application/dto';
 import { UserUpdateService } from '@user/domain/service';
 import { AuthJwtPassportAdapter } from '@auth/infra/adapter';
@@ -29,13 +28,14 @@ import {
   tenantHeaderOptions,
   InternalServerErrorOutputDto,
 } from '@libs/common-dto';
+import { UserUnauthorizedOutputDto } from '@common/dto';
 
 @ApiTags('User')
 @ApiBearerAuth('token')
 @UseGuards(AuthJwtPassportAdapter)
 @Controller({ version: '1' })
 @ApiBadRequestResponse({ type: UserUpdateBadRequestOutputDto })
-@ApiUnauthorizedResponse({ type: UserUpdateUnauthorizedOutputDto })
+@ApiUnauthorizedResponse({ type: UserUnauthorizedOutputDto })
 @ApiInternalServerErrorResponse({ type: InternalServerErrorOutputDto })
 export class UserUpdateController {
   constructor(private readonly updateUserService: UserUpdateService) {}
@@ -49,8 +49,8 @@ export class UserUpdateController {
     type: UserUpdateOutputDto,
   })
   @ApiHeaders([...tenantHeaderOptions])
-  @Patch()
-  async update(
+  @Patch('/user')
+  async userUpdate(
     @Body() updateUserInputDto: UserUpdateInputDto,
   ): Promise<UserUpdateOutputDto> {
     return await this.updateUserService
