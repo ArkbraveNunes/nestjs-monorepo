@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import app from './config/app.config';
 import database from './config/database.config';
 import { AppConfigModule } from '@libs/config';
-import { RequestContextModule } from '@libs/request-context';
+import { RequestContextModule, TYPE_PARAMETER } from '@libs/request-context';
 import { MongoDatabaseModule } from '@libs/database';
 import { CryptographDataModule } from '@libs/cryptograph-data';
 import { REQUEST_CONTEXT } from './enum';
@@ -37,7 +37,7 @@ import { MomentModule } from '@libs/moment';
       parameters: [
         {
           name: REQUEST_CONTEXT.TENANT,
-          property: 'headers',
+          type: TYPE_PARAMETER.HEADER,
         },
       ],
     }),
