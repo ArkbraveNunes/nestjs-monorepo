@@ -2,13 +2,18 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import {
+  AddressCreateController,
   UserCreateController,
   UserUpdateController,
 } from '@user/application/controller';
 import { userSchema } from '@user/infra/schema';
 import { COLLECTION, REPOSITORY } from '@common/enum';
 import { MongoUserRepository } from '@user/infra/repository';
-import { UserCreateService, UserUpdateService } from '@user/domain/service';
+import {
+  AddressCreateService,
+  UserCreateService,
+  UserUpdateService,
+} from '@user/domain/service';
 
 @Module({
   imports: [
@@ -20,10 +25,15 @@ import { UserCreateService, UserUpdateService } from '@user/domain/service';
       },
     ]),
   ],
-  controllers: [UserCreateController, UserUpdateController],
+  controllers: [
+    UserCreateController,
+    UserUpdateController,
+    AddressCreateController,
+  ],
   providers: [
     UserCreateService,
     UserUpdateService,
+    AddressCreateService,
     { provide: REPOSITORY.USER_REPOSITORY, useClass: MongoUserRepository },
   ],
   exports: [
