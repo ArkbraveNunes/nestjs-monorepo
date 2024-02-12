@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 
 import { COLLECTION, MESSAGES_ERRORS, MONGO_ERROR_CODE } from '@common/enum';
 import { UserSchema } from '@user/infra/schema';
-import { ProfileProps, UserEntity } from '@user/domain/entity';
+import { AddressProps, ProfileProps, UserEntity } from '@user/domain/entity';
 import { UserRepositoryContract } from '@user/domain/contract';
 
 @Injectable()
@@ -88,5 +88,28 @@ export class MongoUserRepository implements UserRepositoryContract {
       .lean();
 
     return UserEntity.fromDbToEntity(docResult).profile;
+  }
+
+  async createAddress(
+    userId: string,
+    { id: addressId, ...address }: AddressProps,
+  ): Promise<AddressProps[]> {
+    const docResult = await this.userModel
+      .findOneAndUpdate(
+        {
+          _id: userId,
+        },
+        {
+          $push: {
+            'data.address': { _id: addressId, ...address },
+          },
+        },
+        {
+          new: true,
+        },
+      )
+      .lean();
+
+    return UserEntity.fromDbToEntity(docResult).address;
   }
 }

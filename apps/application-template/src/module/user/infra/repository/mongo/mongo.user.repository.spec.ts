@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { mockedUserEntity } from '@test/mock';
+import { mockedUserEntity, mockedAddressEntity } from '@test/mock';
 import { userSchema, UserSchema } from '@user/infra/schema';
 import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
 import { MongoUserRepository } from '@user/infra/repository';
@@ -172,6 +172,34 @@ describe('MongoUserRepository', () => {
         .updateUserProfile(mockedUserEntity.id, {
           gender: USER_GENDER.NON_BINARY,
         })
+        .catch((actualError) => {
+          expect(actualError).toBe(expectedMongoError);
+        });
+    });
+  });
+
+  describe('createAddress()', () => {
+    it('should call createAddress - success - return address list', async () => {
+      await mongoUserRepository.create({
+        ...mockedUserEntity,
+        address: [],
+      });
+
+      const actualAddressList = await mongoUserRepository.createAddress(
+        mockedUserEntity.id,
+        mockedAddressEntity(),
+      );
+
+      expect(actualAddressList.length > 0).toBe(true);
+    });
+
+    it('should call createAddress - return database error', async () => {
+      jest.spyOn(mockedUserModel, 'findOneAndUpdate').mockReturnValueOnce({
+        lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
+      } as any);
+
+      await mongoUserRepository
+        .createAddress(mockedUserEntity.id, mockedAddressEntity())
         .catch((actualError) => {
           expect(actualError).toBe(expectedMongoError);
         });
