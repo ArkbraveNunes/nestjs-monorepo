@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import {
   AddressCreateController,
+  AddressDeleteController,
   AddressUpdateController,
   UserCreateController,
   UserUpdateController,
@@ -12,6 +13,7 @@ import { COLLECTION, REPOSITORY } from '@common/enum';
 import { MongoUserRepository } from '@user/infra/repository';
 import {
   AddressCreateService,
+  AddressDeleteService,
   AddressUpdateService,
   UserCreateService,
   UserUpdateService,
@@ -32,12 +34,14 @@ import {
     UserUpdateController,
     AddressCreateController,
     AddressUpdateController,
+    AddressDeleteController,
   ],
   providers: [
     UserCreateService,
     UserUpdateService,
     AddressCreateService,
     AddressUpdateService,
+    AddressDeleteService,
     { provide: REPOSITORY.USER_REPOSITORY, useClass: MongoUserRepository },
   ],
   exports: [

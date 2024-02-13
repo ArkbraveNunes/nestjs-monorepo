@@ -112,23 +112,21 @@ describe('MongoUserRepository', () => {
     it('should call findByEmail - success - return user', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
-      const actualCustomer = await mongoUserRepository.findByEmail({
+      const actualUser = await mongoUserRepository.findByEmail({
         email: mockedUserEntity.profile.email,
       });
 
-      expect(actualCustomer.profile.email).toEqual(
-        mockedUserEntity.profile.email,
-      );
+      expect(actualUser.profile.email).toEqual(mockedUserEntity.profile.email);
     });
 
     it('should call findByEmail - success - return null', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
-      const actualCustomer = await mongoUserRepository.findByEmail({
+      const actualUser = await mongoUserRepository.findByEmail({
         email: faker.internet.email(),
       });
 
-      expect(actualCustomer).toEqual(null);
+      expect(actualUser).toEqual(null);
     });
 
     it('should call findByEmail - error - database error', async () => {
@@ -151,14 +149,14 @@ describe('MongoUserRepository', () => {
     it('should call updateUserProfile - success - return profile', async () => {
       await mongoUserRepository.create(mockedUserEntity);
 
-      const actualCustomer = await mongoUserRepository.updateUserProfile(
+      const actualUser = await mongoUserRepository.updateUserProfile(
         mockedUserEntity.id,
         {
           gender: USER_GENDER.NON_BINARY,
         },
       );
 
-      expect(actualCustomer).toEqual({
+      expect(actualUser).toEqual({
         ...mockedUserEntity.profile,
         gender: USER_GENDER.NON_BINARY,
       });
@@ -249,6 +247,40 @@ describe('MongoUserRepository', () => {
         .updateAddress(mockedUserEntity.id, {
           addressId: address.id,
           ...addressDataUpdated,
+        })
+        .catch((actualError) => {
+          expect(actualError).toBe(expectedMongoError);
+        });
+    });
+  });
+
+  describe('deleteAddress()', () => {
+    it('should call deleteAddress - success - return address list without address deleted', async () => {
+      const addressDeleted = mockedAddressEntity();
+
+      await mongoUserRepository.create({
+        ...mockedUserEntity,
+        address: [mockedAddressEntity(), addressDeleted],
+      });
+
+      const actualAddress = await mongoUserRepository.deleteAddress(
+        mockedUserEntity.id,
+        { addressId: addressDeleted.id },
+      );
+
+      expect(
+        actualAddress.map(({ id }) => id).includes(addressDeleted.id),
+      ).toBeFalsy();
+    });
+
+    it('should call deleteAddress - return database error', async () => {
+      jest.spyOn(mockedUserModel, 'findOneAndUpdate').mockReturnValueOnce({
+        lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
+      } as any);
+
+      await mongoUserRepository
+        .deleteAddress(mockedUserEntity.id, {
+          addressId: mockedAddressEntity().id,
         })
         .catch((actualError) => {
           expect(actualError).toBe(expectedMongoError);

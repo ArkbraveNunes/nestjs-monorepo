@@ -146,4 +146,27 @@ export class MongoUserRepository implements UserRepositoryContract {
       ({ id }) => id === addressId,
     );
   }
+
+  async deleteAddress(
+    userId: string,
+    { addressId }: { addressId: string },
+  ): Promise<AddressProps[]> {
+    const docResult = await this.userModel
+      .findOneAndUpdate(
+        {
+          _id: userId,
+        },
+        {
+          $pull: {
+            'data.address': { _id: addressId },
+          },
+        },
+        {
+          new: true,
+        },
+      )
+      .lean();
+
+    return UserEntity.fromDbToEntity(docResult).address;
+  }
 }
