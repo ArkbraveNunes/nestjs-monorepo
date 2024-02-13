@@ -20,7 +20,6 @@ export type DbAddressProps = Omit<AddressProps, 'id'> & { _id: Types.ObjectId };
 
 export class AddressEntity extends Entity {
   id: string;
-  alias?: string;
   street?: string;
   number?: string;
   complement?: string;
