@@ -53,7 +53,7 @@ export class AddressUpdateController {
   })
   @ApiHeaders([...tenantHeaderOptions])
   @Patch('/address/:addressId')
-  async updateAddress(
+  async addressUpdate(
     @Param() { addressId }: AddressUpdateParamIdDto,
     @Body() updateAddressInputDto: AddressUpdateInputDto,
   ): Promise<AddressUpdateOutputDto> {

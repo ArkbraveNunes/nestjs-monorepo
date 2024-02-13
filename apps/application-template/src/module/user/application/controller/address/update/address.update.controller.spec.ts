@@ -28,9 +28,9 @@ describe('AddressUpdateController', () => {
     controller = new AddressUpdateController(mockedAddressUpdateService);
   });
 
-  describe('updateAddress', () => {
+  describe('addressUpdate', () => {
     it('should call AddressUpdateService - success', async () => {
-      await controller.updateAddress(
+      await controller.addressUpdate(
         addressUpdateParamIdDto,
         addressUpdateInputDto,
       );
@@ -44,7 +44,7 @@ describe('AddressUpdateController', () => {
       );
 
       await controller
-        .updateAddress(addressUpdateParamIdDto, addressUpdateInputDto)
+        .addressUpdate(addressUpdateParamIdDto, addressUpdateInputDto)
         .catch((actualError) => {
           expect(mockedAddressUpdateService.execute).toHaveBeenCalledTimes(1);
           expect(actualError).toBeInstanceOf(InternalServerErrorException);
