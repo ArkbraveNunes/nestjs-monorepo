@@ -10,6 +10,7 @@ import { COLLECTION, MESSAGES_ERRORS, MONGO_ERROR_CODE } from '@common/enum';
 import { UserSchema } from '@user/infra/schema';
 import { AddressProps, ProfileProps, UserEntity } from '@user/domain/entity';
 import { UserRepositoryContract } from '@user/domain/contract';
+import { MongoHelper } from './helper/mongo.helper';
 
 @Injectable()
 export class MongoUserRepository implements UserRepositoryContract {
@@ -69,11 +70,9 @@ export class MongoUserRepository implements UserRepositoryContract {
     userId: string,
     profile: Partial<ProfileProps>,
   ): Promise<ProfileProps> {
-    const query = {};
-
-    Object.keys(profile).forEach((key) => {
-      const queryKey = `data.profile.${key}`;
-      query[queryKey] = profile[key];
+    const query = MongoHelper.formatSimpleQuery({
+      baseKey: 'data.profile',
+      iterationObject: profile,
     });
 
     const docResult = await this.userModel
@@ -111,5 +110,40 @@ export class MongoUserRepository implements UserRepositoryContract {
       .lean();
 
     return UserEntity.fromDbToEntity(docResult).address;
+  }
+
+  async updateAddress(
+    userId: string,
+    {
+      addressId,
+      ...address
+    }: { addressId: string } & Partial<Omit<AddressProps, 'id'>>,
+  ): Promise<AddressProps> {
+    const query = MongoHelper.formatSimpleQuery({
+      baseKey: 'data.address.$[item]',
+      iterationObject: address,
+    });
+
+    const docResult = await this.userModel
+      .findOneAndUpdate(
+        {
+          _id: userId,
+          'data.address._id': addressId,
+        },
+        {
+          $set: {
+            ...query,
+          },
+        },
+        {
+          arrayFilters: [{ 'item._id': addressId }],
+          new: true,
+        },
+      )
+      .lean();
+
+    return UserEntity.fromDbToEntity(docResult).address.find(
+      ({ id }) => id === addressId,
+    );
   }
 }

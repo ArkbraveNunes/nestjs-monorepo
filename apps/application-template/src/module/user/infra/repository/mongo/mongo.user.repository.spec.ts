@@ -11,6 +11,7 @@ import { mockedUserEntity, mockedAddressEntity } from '@test/mock';
 import { userSchema, UserSchema } from '@user/infra/schema';
 import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
 import { MongoUserRepository } from '@user/infra/repository';
+import { AddressEntity } from '@user/domain/entity';
 
 describe('MongoUserRepository', () => {
   let mongoUserRepository: MongoUserRepository;
@@ -200,6 +201,55 @@ describe('MongoUserRepository', () => {
 
       await mongoUserRepository
         .createAddress(mockedUserEntity.id, mockedAddressEntity())
+        .catch((actualError) => {
+          expect(actualError).toBe(expectedMongoError);
+        });
+    });
+  });
+
+  describe('updateAddress()', () => {
+    it('should call updateAddress - success - return address updated', async () => {
+      const address: Partial<AddressEntity> = {
+        id: mockedUserEntity.address[0].id,
+        number: faker.number.int().toString(),
+      };
+
+      await mongoUserRepository.create({
+        ...mockedUserEntity,
+      });
+
+      const actualAddress = await mongoUserRepository.updateAddress(
+        mockedUserEntity.id,
+        { addressId: address.id, ...address },
+      );
+
+      Object.keys(address).forEach((propertyUpdated) => {
+        expect(
+          address[propertyUpdated] === actualAddress[propertyUpdated],
+        ).toBe(true);
+      });
+    });
+
+    it('should call updateAddress - return database error', async () => {
+      jest.spyOn(mockedUserModel, 'findOneAndUpdate').mockReturnValueOnce({
+        lean: jest.fn().mockRejectedValueOnce(expectedMongoError),
+      } as any);
+
+      const addressDataUpdated: Partial<Omit<AddressEntity, 'id'>> = {
+        number: faker.number.int().toString(),
+      };
+      const address = mockedAddressEntity();
+
+      await mongoUserRepository.create({
+        ...mockedUserEntity,
+        address: [address],
+      });
+
+      await mongoUserRepository
+        .updateAddress(mockedUserEntity.id, {
+          addressId: address.id,
+          ...addressDataUpdated,
+        })
         .catch((actualError) => {
           expect(actualError).toBe(expectedMongoError);
         });
