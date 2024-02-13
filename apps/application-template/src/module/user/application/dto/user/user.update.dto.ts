@@ -12,6 +12,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 
 import { BadRequestErrorOutputDto } from '@libs/common-dto';
 import { MESSAGES_ERRORS, MESSAGES_SUCCESS, USER_GENDER } from '@common/enum';
+import { UserUpdateServiceOutputDto } from '@user/domain/service';
 
 export class UserUpdateInputDto {
   @ApiProperty({ example: faker.person.fullName() })
@@ -53,7 +54,7 @@ export class UserUpdateOutputDto {
   @IsNotEmpty()
   message: MESSAGES_ERRORS[];
 
-  constructor(userUpdateServiceOutputDto: any) {
+  constructor(userUpdateServiceOutputDto: UserUpdateServiceOutputDto) {
     Object.assign(this, userUpdateServiceOutputDto);
   }
 }

@@ -12,7 +12,7 @@ import {
 import { MESSAGES_ERRORS } from '@common/enum';
 import { BadRequestErrorOutputDto } from '@libs/common-dto';
 
-class CoordinatesDto {
+export class CoordinatesDto {
   @ApiProperty({ example: faker.location.latitude() })
   @IsDefined({
     message: MESSAGES_ERRORS.ADDRESS_COORDINATES_LATITUDE_IS_REQUIRED,
