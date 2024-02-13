@@ -25,11 +25,11 @@ export class UserUpdateService
   async execute(
     updateCustomerServiceInputDto: UserUpdateServiceInputDto,
   ): Promise<UserUpdateServiceOutputDto> {
-    const customerId = this.requestContextService.get(REQUEST_CONTEXT.USER_ID);
+    const userId = this.requestContextService.get(REQUEST_CONTEXT.USER_ID);
 
     const profileData: Partial<ProfileProps> = updateCustomerServiceInputDto;
 
-    await this.userRepository.updateUserProfile(customerId, profileData);
+    await this.userRepository.updateUserProfile(userId, profileData);
 
     return {
       message: [MESSAGES_SUCCESS.USER_UPDATED_WITH_SUCCESS],

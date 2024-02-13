@@ -10,4 +10,8 @@ export interface UserRepositoryContract
     profile: Partial<ProfileProps>,
   ): Promise<ProfileProps>;
   createAddress(userId: string, address: AddressProps): Promise<AddressProps[]>;
+  updateAddress(
+    userId: string,
+    address: { addressId: string } & Partial<Omit<AddressProps, 'id'>>,
+  ): Promise<AddressProps>;
 }

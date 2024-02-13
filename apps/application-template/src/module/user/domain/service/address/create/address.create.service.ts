@@ -28,10 +28,10 @@ export class AddressCreateService
   async execute(
     address: AddressCreateServiceInputDto,
   ): Promise<AddressCreateServiceOutputDto> {
-    const customerId = this.requestContextService.get(REQUEST_CONTEXT.USER_ID);
+    const userId = this.requestContextService.get(REQUEST_CONTEXT.USER_ID);
 
     const addressEntity = AddressEntity.create(address);
 
-    return this.userRepository.createAddress(customerId, addressEntity);
+    return this.userRepository.createAddress(userId, addressEntity);
   }
 }
