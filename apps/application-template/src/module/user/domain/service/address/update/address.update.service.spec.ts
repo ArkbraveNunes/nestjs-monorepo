@@ -35,6 +35,10 @@ describe('AddressUpdateService', () => {
     await service.execute({ ...addressUpdateServiceInput });
 
     expect(requestContextService.get).toHaveBeenCalledTimes(1);
+    expect(userRepository.updateAddress).toHaveBeenCalledWith(
+      mockedUserEntity.id,
+      { ...addressUpdateServiceInput },
+    );
     expect(userRepository.updateAddress).toHaveBeenCalledTimes(1);
   });
 

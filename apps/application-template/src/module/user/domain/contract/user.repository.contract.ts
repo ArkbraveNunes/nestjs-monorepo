@@ -14,4 +14,8 @@ export interface UserRepositoryContract
     userId: string,
     address: { addressId: string } & Partial<Omit<AddressProps, 'id'>>,
   ): Promise<AddressProps>;
+  deleteAddress(
+    userId: string,
+    { addressId }: { addressId: string },
+  ): Promise<AddressProps[]>;
 }
