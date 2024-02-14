@@ -75,7 +75,7 @@ describe('LoginService', () => {
     expect(generateTokenHelper.generateRefreshToken).toHaveBeenCalledTimes(1);
   });
 
-  it('status 401 - compareData - unauthorized error ', async () => {
+  it('status 401 - compareData - unauthorized error', async () => {
     cryptographDataService.compareData.mockResolvedValue(false);
 
     await service
@@ -87,7 +87,7 @@ describe('LoginService', () => {
       .then((result) => expect(result).toBe(undefined));
   });
 
-  it('status 401 - findByEmail - unauthorized error ', async () => {
+  it('status 401 - findByEmail - unauthorized error', async () => {
     userRepository.findByEmail.mockResolvedValue(null);
 
     await service

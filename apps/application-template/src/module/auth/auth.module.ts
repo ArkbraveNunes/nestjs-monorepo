@@ -3,8 +3,11 @@ import { PassportModule } from '@nestjs/passport';
 import { Module, forwardRef } from '@nestjs/common';
 
 import { UserModule } from '@user/user.module';
-import { LoginController } from '@auth/application/controller';
-import { LoginService } from '@auth/domain/service';
+import {
+  LoginController,
+  LoginRefreshController,
+} from '@auth/application/controller';
+import { LoginRefreshService, LoginService } from '@auth/domain/service';
 import { GenerateTokenHelper } from '@auth/domain/helper';
 import {
   AuthJwtStrategyAdapter,
@@ -17,18 +20,20 @@ import {
     JwtModule.register({}),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  controllers: [LoginController],
+  controllers: [LoginController, LoginRefreshController],
   providers: [
     LoginService,
+    LoginRefreshService,
     GenerateTokenHelper,
     AuthJwtStrategyAdapter,
     AuthJwtPassportAdapter,
   ],
   exports: [
-    PassportModule,
     JwtModule,
     LoginService,
+    PassportModule,
     GenerateTokenHelper,
+    LoginRefreshService,
     AuthJwtStrategyAdapter,
     AuthJwtPassportAdapter,
   ],
