@@ -10,10 +10,10 @@ import {
 } from '@nestjs/swagger';
 
 import {
-  LoginControllerBadRequestOutputDto,
-  LoginControllerInputDto,
-  LoginControllerOutputDto,
-  LoginControllerUnauthorizedOutputDto,
+  LoginBadRequestOutputDto,
+  LoginInputDto,
+  LoginOutputDto,
+  LoginUnauthorizedOutputDto,
 } from '@auth/application/dto';
 import {
   tenantHeaderOptions,
@@ -27,13 +27,13 @@ import { LoginService } from '@auth/domain/service';
 })
 @ApiTags('Auth')
 @ApiBadRequestResponse({
-  type: LoginControllerBadRequestOutputDto,
+  type: LoginBadRequestOutputDto,
+})
+@ApiUnauthorizedResponse({
+  type: LoginUnauthorizedOutputDto,
 })
 @ApiInternalServerErrorResponse({
   type: InternalServerErrorOutputDto,
-})
-@ApiUnauthorizedResponse({
-  type: LoginControllerUnauthorizedOutputDto,
 })
 @ApiHeaders([...tenantHeaderOptions])
 export class LoginController {
@@ -45,14 +45,14 @@ export class LoginController {
   })
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({
-    type: LoginControllerOutputDto,
+    type: LoginOutputDto,
   })
   @Post('/login')
   async login(
-    @Body() loginControllerInputDto: LoginControllerInputDto,
-  ): Promise<LoginControllerOutputDto> {
+    @Body() loginControllerInputDto: LoginInputDto,
+  ): Promise<LoginOutputDto> {
     return await this.loginService
       .execute(loginControllerInputDto)
-      .then((res) => new LoginControllerOutputDto(res));
+      .then((res) => new LoginOutputDto(res));
   }
 }

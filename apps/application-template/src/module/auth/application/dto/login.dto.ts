@@ -2,15 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { IsDefined, IsEmail, IsNotEmpty } from 'class-validator';
 
-import { PasswordValidator } from '@libs/validator';
-import { MESSAGES_ERRORS } from '@common/enum';
 import {
   BadRequestErrorOutputDto,
   UnauthorizedErrorOutputDto,
 } from '@libs/common-dto';
+import { MESSAGES_ERRORS } from '@common/enum';
+import { PasswordValidator } from '@libs/validator';
 import { LoginServiceOutputDto } from '@auth/domain/service';
 
-export class LoginControllerInputDto {
+export class LoginInputDto {
   @ApiProperty({ example: faker.internet.email() })
   @IsDefined({ message: MESSAGES_ERRORS.EMAIL_IS_REQUIRED })
   @IsEmail(undefined, { message: MESSAGES_ERRORS.EMAIL_IS_INVALID })
@@ -22,7 +22,7 @@ export class LoginControllerInputDto {
   password: string;
 }
 
-export class LoginControllerOutputDto {
+export class LoginOutputDto {
   @ApiProperty({ example: faker.internet.password({ length: 15 }) })
   @IsNotEmpty()
   accessToken: string;
@@ -40,7 +40,7 @@ export class LoginControllerOutputDto {
   }
 }
 
-export class LoginControllerBadRequestOutputDto extends BadRequestErrorOutputDto {
+export class LoginBadRequestOutputDto extends BadRequestErrorOutputDto {
   @ApiProperty({
     example: [
       MESSAGES_ERRORS.TENANT_IS_INVALID,
@@ -55,7 +55,7 @@ export class LoginControllerBadRequestOutputDto extends BadRequestErrorOutputDto
   message: MESSAGES_ERRORS[];
 }
 
-export class LoginControllerUnauthorizedOutputDto extends UnauthorizedErrorOutputDto {
+export class LoginUnauthorizedOutputDto extends UnauthorizedErrorOutputDto {
   @ApiProperty({
     example: [MESSAGES_ERRORS.INVALID_EMAIL_OR_PASSWORD],
   })
