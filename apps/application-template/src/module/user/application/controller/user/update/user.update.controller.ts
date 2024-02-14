@@ -32,8 +32,8 @@ import { UserUnauthorizedOutputDto } from '@common/dto';
 
 @ApiTags('User')
 @ApiBearerAuth('token')
-@UseGuards(AuthJwtPassportAdapter)
 @Controller({ version: '1' })
+@UseGuards(AuthJwtPassportAdapter)
 @ApiBadRequestResponse({ type: UserUpdateBadRequestOutputDto })
 @ApiUnauthorizedResponse({ type: UserUnauthorizedOutputDto })
 @ApiInternalServerErrorResponse({ type: InternalServerErrorOutputDto })

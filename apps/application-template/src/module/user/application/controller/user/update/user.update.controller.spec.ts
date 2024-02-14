@@ -26,7 +26,7 @@ describe('UserUpdateController', () => {
     controller = new UserUpdateController(userUpdateCustomerService);
   });
 
-  describe('update', () => {
+  describe('userUpdate', () => {
     it('should call UserUpdateService - success', async () => {
       await controller.userUpdate(userUpdateInputDto);
 
