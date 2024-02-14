@@ -6,6 +6,7 @@ import {
   AddressDeleteController,
   AddressUpdateController,
   UserCreateController,
+  UserFindController,
   UserUpdateController,
 } from '@user/application/controller';
 import { userSchema } from '@user/infra/schema';
@@ -16,6 +17,7 @@ import {
   AddressDeleteService,
   AddressUpdateService,
   UserCreateService,
+  UserFindService,
   UserUpdateService,
 } from '@user/domain/service';
 
@@ -32,6 +34,7 @@ import {
   controllers: [
     UserCreateController,
     UserUpdateController,
+    UserFindController,
     AddressCreateController,
     AddressUpdateController,
     AddressDeleteController,
@@ -39,6 +42,7 @@ import {
   providers: [
     UserCreateService,
     UserUpdateService,
+    UserFindService,
     AddressCreateService,
     AddressUpdateService,
     AddressDeleteService,
