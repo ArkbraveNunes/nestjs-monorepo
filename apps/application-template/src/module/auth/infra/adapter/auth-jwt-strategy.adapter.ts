@@ -6,7 +6,11 @@ import { ConfigService } from '@nestjs/config';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { RequestContextInterface } from '@common/request-context';
 import { ClsService } from 'nestjs-cls';
-import { MESSAGES_ERRORS, REQUEST_CONTEXT, REPOSITORY } from '@common/enum';
+import {
+  USER_MESSAGES_ERRORS,
+  REQUEST_CONTEXT,
+  REPOSITORY,
+} from '@common/enum';
 
 @Injectable()
 export class AuthJwtStrategyAdapter extends PassportStrategy(Strategy, 'jwt') {
@@ -38,7 +42,7 @@ export class AuthJwtStrategyAdapter extends PassportStrategy(Strategy, 'jwt') {
       })
       .catch(() => {
         return done(
-          new UnauthorizedException(MESSAGES_ERRORS.USER_UNAUTHORIZED),
+          new UnauthorizedException(USER_MESSAGES_ERRORS.USER_UNAUTHORIZED),
           false,
         );
       });
@@ -49,7 +53,7 @@ export class AuthJwtStrategyAdapter extends PassportStrategy(Strategy, 'jwt') {
 export class AuthJwtPassportAdapter extends AuthGuard('jwt') {
   handleRequest(err, user) {
     if (err || !user) {
-      throw new UnauthorizedException(MESSAGES_ERRORS.USER_UNAUTHORIZED);
+      throw new UnauthorizedException(USER_MESSAGES_ERRORS.USER_UNAUTHORIZED);
     }
     return user;
   }

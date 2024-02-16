@@ -14,7 +14,7 @@ import moment from 'moment';
 import { MomentService } from '@libs/moment';
 import { mockedUserEntity } from '@test/mock';
 import { CryptographDataService } from '@libs/cryptograph-data';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 
 describe('LoginService', () => {
   let service: LoginService;
@@ -101,7 +101,9 @@ describe('LoginService', () => {
 
   it('status 500 - database - internal server error', async () => {
     userRepository.findByEmail.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

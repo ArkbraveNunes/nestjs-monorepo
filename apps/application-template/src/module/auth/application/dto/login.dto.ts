@@ -6,19 +6,19 @@ import {
   BadRequestErrorOutputDto,
   UnauthorizedErrorOutputDto,
 } from '@libs/common-dto';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { PasswordValidator } from '@libs/validator';
 import { LoginServiceOutputDto } from '@auth/domain/service';
 
 export class LoginInputDto {
   @ApiProperty({ example: faker.internet.email() })
-  @IsDefined({ message: MESSAGES_ERRORS.EMAIL_IS_REQUIRED })
-  @IsEmail(undefined, { message: MESSAGES_ERRORS.EMAIL_IS_INVALID })
+  @IsDefined({ message: USER_MESSAGES_ERRORS.EMAIL_IS_REQUIRED })
+  @IsEmail(undefined, { message: USER_MESSAGES_ERRORS.EMAIL_IS_INVALID })
   email: string;
 
   @ApiProperty({ example: faker.internet.password() })
-  @IsDefined({ message: MESSAGES_ERRORS.PASSWORD_IS_REQUIRED })
-  @PasswordValidator({ message: MESSAGES_ERRORS.PASSWORD_IS_INVALID })
+  @IsDefined({ message: USER_MESSAGES_ERRORS.PASSWORD_IS_REQUIRED })
+  @PasswordValidator({ message: USER_MESSAGES_ERRORS.PASSWORD_IS_INVALID })
   password: string;
 }
 
@@ -43,22 +43,22 @@ export class LoginOutputDto {
 export class LoginBadRequestOutputDto extends BadRequestErrorOutputDto {
   @ApiProperty({
     example: [
-      MESSAGES_ERRORS.TENANT_IS_INVALID,
-      MESSAGES_ERRORS.TENANT_IS_REQUIRED,
-      MESSAGES_ERRORS.EMAIL_IS_INVALID,
-      MESSAGES_ERRORS.EMAIL_IS_REQUIRED,
-      MESSAGES_ERRORS.PASSWORD_IS_REQUIRED,
-      MESSAGES_ERRORS.PASSWORD_IS_INVALID,
+      USER_MESSAGES_ERRORS.TENANT_IS_INVALID,
+      USER_MESSAGES_ERRORS.TENANT_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.EMAIL_IS_INVALID,
+      USER_MESSAGES_ERRORS.EMAIL_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.PASSWORD_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.PASSWORD_IS_INVALID,
     ],
   })
   @IsNotEmpty()
-  message: MESSAGES_ERRORS[];
+  message: USER_MESSAGES_ERRORS[];
 }
 
 export class LoginUnauthorizedOutputDto extends UnauthorizedErrorOutputDto {
   @ApiProperty({
-    example: [MESSAGES_ERRORS.INVALID_EMAIL_OR_PASSWORD],
+    example: [USER_MESSAGES_ERRORS.INVALID_EMAIL_OR_PASSWORD],
   })
   @IsNotEmpty()
-  message: MESSAGES_ERRORS[];
+  message: USER_MESSAGES_ERRORS[];
 }

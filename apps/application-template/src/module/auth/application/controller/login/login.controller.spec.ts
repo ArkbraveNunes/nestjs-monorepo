@@ -8,7 +8,7 @@ import {
 import { LoginInputDto, LoginOutputDto } from '@auth/application/dto';
 import { LoginController } from './login.controller';
 import { InternalServerErrorException } from '@nestjs/common';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 
 describe('LoginController', () => {
   let controller: LoginController;
@@ -44,7 +44,9 @@ describe('LoginController', () => {
 
     it('should call LoginService - error', async () => {
       mockedLoginService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller.login(mockedLoginInputDto).catch((actualError) => {

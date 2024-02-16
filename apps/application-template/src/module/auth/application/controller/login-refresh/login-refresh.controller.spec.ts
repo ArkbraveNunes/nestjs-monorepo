@@ -9,7 +9,7 @@ import {
   LoginRefreshInputDto,
   LoginRefreshOutputDto,
 } from '@auth/application/dto';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { InternalServerErrorException } from '@nestjs/common';
 import { LoginRefreshController } from '@auth/application/controller';
 
@@ -49,7 +49,9 @@ describe('LoginRefreshController', () => {
 
     it('should call LoginRefreshService - error', async () => {
       mockedLoginRefreshService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller

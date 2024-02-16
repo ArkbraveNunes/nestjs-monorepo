@@ -13,7 +13,7 @@ import {
 } from '@auth/domain/service';
 import { MomentService } from '@libs/moment';
 import { mockedUserEntity } from '@test/mock';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { GenerateTokenHelper } from '@auth/domain/helper';
 import { UserRepositoryContract } from '@user/domain/contract';
 
@@ -91,7 +91,9 @@ describe('LoginRefreshService', () => {
 
   it('status 500 - database - internal server error', async () => {
     mockedUserRepository.findById.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

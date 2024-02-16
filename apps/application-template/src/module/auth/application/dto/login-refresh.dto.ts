@@ -7,13 +7,13 @@ import {
   UnauthorizedErrorOutputDto,
 } from '@libs/common-dto';
 import { mockedJwtToken } from '@test/mock';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { LoginRefreshServiceOutputDto } from '@auth/domain/service';
 
 export class LoginRefreshInputDto {
   @ApiProperty({ example: mockedJwtToken })
-  @IsDefined({ message: MESSAGES_ERRORS.REFRESH_TOKEN_IS_REQUIRED })
-  @IsJWT({ message: MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID })
+  @IsDefined({ message: USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_REQUIRED })
+  @IsJWT({ message: USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID })
   refreshToken: string;
 }
 
@@ -38,20 +38,20 @@ export class LoginRefreshOutputDto {
 export class LoginRefreshBadRequestOutputDto extends BadRequestErrorOutputDto {
   @ApiProperty({
     example: [
-      MESSAGES_ERRORS.TENANT_IS_INVALID,
-      MESSAGES_ERRORS.TENANT_IS_REQUIRED,
-      MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID,
-      MESSAGES_ERRORS.REFRESH_TOKEN_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.TENANT_IS_INVALID,
+      USER_MESSAGES_ERRORS.TENANT_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID,
+      USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_REQUIRED,
     ],
   })
   @IsNotEmpty()
-  message: MESSAGES_ERRORS[];
+  message: USER_MESSAGES_ERRORS[];
 }
 
 export class LoginRefreshUnauthorizedOutputDto extends UnauthorizedErrorOutputDto {
   @ApiProperty({
-    example: [MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID],
+    example: [USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID],
   })
   @IsNotEmpty()
-  message: MESSAGES_ERRORS[];
+  message: USER_MESSAGES_ERRORS[];
 }

@@ -9,7 +9,7 @@ import {
 } from '@auth/domain/service';
 import { GenerateTokenHelper } from '@auth/domain/helper';
 import { UserRepositoryContract } from '@user/domain/contract';
-import { MESSAGES_ERRORS, REPOSITORY } from '@common/enum';
+import { USER_MESSAGES_ERRORS, REPOSITORY } from '@common/enum';
 
 @Injectable()
 export class LoginRefreshService
@@ -34,7 +34,7 @@ export class LoginRefreshService
       })
       .catch(() => {
         throw new UnauthorizedException(
-          MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID,
+          USER_MESSAGES_ERRORS.REFRESH_TOKEN_IS_INVALID,
         );
       });
 

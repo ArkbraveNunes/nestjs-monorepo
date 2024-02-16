@@ -9,7 +9,7 @@ import {
 } from '@auth/domain/service';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { GenerateTokenHelper } from '@auth/domain/helper';
-import { MESSAGES_ERRORS, REPOSITORY } from '@common/enum';
+import { USER_MESSAGES_ERRORS, REPOSITORY } from '@common/enum';
 import { CryptographDataService } from '@libs/cryptograph-data';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class LoginService
       ))
     ) {
       throw new UnauthorizedException(
-        MESSAGES_ERRORS.INVALID_EMAIL_OR_PASSWORD,
+        USER_MESSAGES_ERRORS.INVALID_EMAIL_OR_PASSWORD,
       );
     }
 
