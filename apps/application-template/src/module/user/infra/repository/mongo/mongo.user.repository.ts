@@ -6,11 +6,17 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { COLLECTION, MESSAGES_ERRORS, MONGO_ERROR_CODE } from '@common/enum';
+import {
+  COLLECTION,
+  USER_MESSAGES_ERRORS,
+  MONGO_ERROR_CODE,
+  USER_LISTENER,
+} from '@common/enum';
 import { UserSchema } from '@user/infra/schema';
 import { AddressProps, ProfileProps, UserEntity } from '@user/domain/entity';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { MongoHelper } from './helper/mongo.helper';
+import { EventEmitterService } from '@libs/event-emitter';
 
 @Injectable()
 export class MongoUserRepository implements UserRepositoryContract {
@@ -19,6 +25,7 @@ export class MongoUserRepository implements UserRepositoryContract {
   constructor(
     @InjectModel(COLLECTION.USER)
     private readonly userModel: Model<UserSchema>,
+    private readonly listenerService: EventEmitterService,
   ) {}
 
   async create(user: UserEntity): Promise<void> {
@@ -38,8 +45,12 @@ export class MongoUserRepository implements UserRepositoryContract {
 
     await createdUser.save().catch((err) => {
       throw err?.code === MONGO_ERROR_CODE.DUPLICATE_KEY
-        ? new ConflictException(MESSAGES_ERRORS.USER_CONFLICT)
+        ? new ConflictException(USER_MESSAGES_ERRORS.USER_CONFLICT)
         : err;
+    });
+
+    this.listenerService.emit(USER_LISTENER.USER_CREATE, {
+      document: createdUser,
     });
   }
 
@@ -49,7 +60,7 @@ export class MongoUserRepository implements UserRepositoryContract {
       .lean();
 
     if (!docResult) {
-      throw new NotFoundException(MESSAGES_ERRORS.USER_DOES_NOT_EXIST);
+      throw new NotFoundException(USER_MESSAGES_ERRORS.USER_DOES_NOT_EXIST);
     }
 
     return UserEntity.fromDbToEntity(docResult);
@@ -86,6 +97,13 @@ export class MongoUserRepository implements UserRepositoryContract {
       )
       .lean();
 
+    if (docResult) {
+      this.listenerService.emit(USER_LISTENER.USER_PROFILE_UPDATE, {
+        document: docResult,
+        profile: docResult.data.profile,
+      });
+    }
+
     return UserEntity.fromDbToEntity(docResult).profile;
   }
 
@@ -108,6 +126,15 @@ export class MongoUserRepository implements UserRepositoryContract {
         },
       )
       .lean();
+
+    if (docResult) {
+      this.listenerService.emit(USER_LISTENER.ADDRESS_CREATE, {
+        document: docResult,
+        newAddress: docResult.data.address.find(
+          (addressItem) => addressItem._id.toString() === addressId,
+        ),
+      });
+    }
 
     return UserEntity.fromDbToEntity(docResult).address;
   }
@@ -142,6 +169,15 @@ export class MongoUserRepository implements UserRepositoryContract {
       )
       .lean();
 
+    if (docResult) {
+      this.listenerService.emit(USER_LISTENER.ADDRESS_UPDATE, {
+        document: docResult,
+        address: docResult.data.address.find(
+          (addressItem) => addressItem._id.toString() === addressId,
+        ),
+      });
+    }
+
     return UserEntity.fromDbToEntity(docResult).address.find(
       ({ id }) => id === addressId,
     );
@@ -166,6 +202,13 @@ export class MongoUserRepository implements UserRepositoryContract {
         },
       )
       .lean();
+
+    if (docResult) {
+      this.listenerService.emit(USER_LISTENER.ADDRESS_DELETE, {
+        document: docResult,
+        address: docResult.data.address,
+      });
+    }
 
     return UserEntity.fromDbToEntity(docResult).address;
   }

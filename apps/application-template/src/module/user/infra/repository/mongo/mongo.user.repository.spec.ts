@@ -4,19 +4,23 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import mongoose from 'mongoose';
+import { MockProxy, mock } from 'jest-mock-extended';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 import { mockedUserEntity, mockedAddressEntity } from '@test/mock';
 import { userSchema, UserSchema } from '@user/infra/schema';
-import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
 import { MongoUserRepository } from '@user/infra/repository';
 import { AddressEntity } from '@user/domain/entity';
+import { EventEmitterService } from '@libs/event-emitter';
 
 describe('MongoUserRepository', () => {
   let mongoUserRepository: MongoUserRepository;
   let inMemoryMongoServer: MongoMemoryServer;
   let mockedUserModel: mongoose.Model<UserSchema>;
+  let listenerService: MockProxy<EventEmitterService>;
+
   let mongoConnection: mongoose.Connection;
   let expectedMongoError: InternalServerErrorException;
 
@@ -27,12 +31,18 @@ describe('MongoUserRepository', () => {
     mockedUserModel = mongoConnection.model(UserSchema.name, userSchema);
 
     expectedMongoError = new InternalServerErrorException(
-      MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
     );
   });
 
   beforeEach(async () => {
-    mongoUserRepository = new MongoUserRepository(mockedUserModel);
+    listenerService = mock();
+    listenerService.emit.mockResolvedValue(true);
+
+    mongoUserRepository = new MongoUserRepository(
+      mockedUserModel,
+      listenerService,
+    );
   });
 
   afterAll(async () => {
