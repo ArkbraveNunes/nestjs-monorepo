@@ -7,7 +7,7 @@ import {
   AddressDeleteListenerInput,
   AddressUpdateListenerInput,
   ProfileUpdateListenerInput,
-} from '@common/listeners';
+} from '@common/listener';
 import { LoggerService } from '@libs/logger';
 import { HistoryCreateService } from '@history/domain/service';
 import { HISTORY_ACTION, HISTORY_TYPE, USER_LISTENER } from '@common/enum';
