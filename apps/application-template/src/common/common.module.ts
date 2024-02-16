@@ -2,14 +2,16 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import app from './config/app.config';
-import database from './config/database.config';
-import { AppConfigModule } from '@libs/config';
-import { RequestContextModule, TYPE_PARAMETER } from '@libs/request-context';
-import { MongoDatabaseModule } from '@libs/database';
-import { CryptographDataModule } from '@libs/cryptograph-data';
 import { REQUEST_CONTEXT } from './enum';
 import { LoggerModule } from '@libs/logger';
 import { MomentModule } from '@libs/moment';
+import { AppConfigModule } from '@libs/config';
+import database from './config/database.config';
+import { MongoDatabaseModule } from '@libs/database';
+import { CryptographDataModule } from '@libs/cryptograph-data';
+import { EventEmitterModule } from '@libs/event-emitter';
+import { RequestContextModule, TYPE_PARAMETER } from '@libs/request-context';
+import { UserListener } from '@common/listener';
 
 @Module({
   imports: [
@@ -48,6 +50,9 @@ import { MomentModule } from '@libs/moment';
         numberOfSalt: configService.get('cryptographPasswordSalt'),
       }),
     }),
+    EventEmitterModule,
   ],
+  providers: [UserListener],
+  exports: [UserListener],
 })
 export class CommonModule {}
