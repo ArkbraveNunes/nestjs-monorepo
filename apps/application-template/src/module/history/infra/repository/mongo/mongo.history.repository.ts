@@ -30,7 +30,7 @@ export class HistoryRepository implements HistoryRepositoryContract {
   async findById(userId: string): Promise<HistoryEntity> {
     const [docResult] = await this.historyModel
       .find({ userId: userId })
-      .sort({ createsAt: -1 })
+      .sort({ createdAt: -1 })
       .limit(1)
       .lean();
 
