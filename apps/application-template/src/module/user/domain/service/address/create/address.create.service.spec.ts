@@ -9,7 +9,7 @@ import {
 } from '@user/domain/service';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { RequestContextInterface } from '@common/request-context';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 
 describe('AddressCreateService', () => {
   let service: AddressCreateService;
@@ -39,7 +39,9 @@ describe('AddressCreateService', () => {
 
   it('error status 500 - database - internal server error', async () => {
     userRepository.createAddress.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

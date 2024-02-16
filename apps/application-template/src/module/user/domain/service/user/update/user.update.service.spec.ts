@@ -5,7 +5,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 import { mockedUserEntity } from '@test/mock';
 import { UserUpdateService } from './user.update.service';
-import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { RequestContextInterface } from '@common/request-context';
 import { UserUpdateServiceInputDto } from './user.update.service.dto';
@@ -45,7 +45,9 @@ describe('UserUpdateService', () => {
 
   it('error status 500 - database - internal server error', async () => {
     userRepository.updateUserProfile.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

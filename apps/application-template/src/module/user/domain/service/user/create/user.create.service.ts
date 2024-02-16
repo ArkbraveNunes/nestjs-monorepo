@@ -6,7 +6,7 @@ import {
 } from '@user/domain/service';
 import { Service } from '@libs/contract';
 import { UserRepositoryContract } from '@user/domain/contract';
-import { MESSAGES_SUCCESS, REPOSITORY } from '@common/enum';
+import { USER_MESSAGES_SUCCESS, REPOSITORY } from '@common/enum';
 import { UserEntity } from '@user/domain/entity';
 import { CryptographDataService } from '@libs/cryptograph-data';
 
@@ -38,7 +38,7 @@ export class UserCreateService
 
     return {
       id: userEntity.id,
-      message: [MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS],
+      message: [USER_MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS],
     };
   }
 }

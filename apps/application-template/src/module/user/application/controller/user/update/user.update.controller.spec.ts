@@ -4,7 +4,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { mockedUserEntity } from '@test/mock';
 import { UserUpdateService } from '@user/domain/service';
 import { UserUpdateInputDto } from '@user/application/dto';
-import { MESSAGES_ERRORS, MESSAGES_SUCCESS } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_MESSAGES_SUCCESS } from '@common/enum';
 import { UserUpdateController } from '@user/application/controller';
 
 describe('UserUpdateController', () => {
@@ -18,7 +18,7 @@ describe('UserUpdateController', () => {
   beforeEach(() => {
     userUpdateCustomerService = mock();
     userUpdateCustomerService.execute.mockResolvedValue({
-      message: [MESSAGES_SUCCESS.USER_UPDATED_WITH_SUCCESS],
+      message: [USER_MESSAGES_SUCCESS.USER_UPDATED_WITH_SUCCESS],
     });
   });
 
@@ -35,7 +35,9 @@ describe('UserUpdateController', () => {
 
     it('should call UserUpdateService - error', async () => {
       userUpdateCustomerService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller.userUpdate(userUpdateInputDto).catch((actualError) => {

@@ -1,5 +1,5 @@
 import { AddressProps, ProfileProps } from '@user/domain/entity';
-import { MESSAGES_SUCCESS } from '@common/enum';
+import { USER_MESSAGES_SUCCESS } from '@common/enum';
 
 export type UserCreateServiceInputDto = Pick<
   ProfileProps,
@@ -10,5 +10,5 @@ export type UserCreateServiceInputDto = Pick<
 
 export type UserCreateServiceOutputDto = {
   id: string;
-  message: MESSAGES_SUCCESS[];
+  message: USER_MESSAGES_SUCCESS[];
 };

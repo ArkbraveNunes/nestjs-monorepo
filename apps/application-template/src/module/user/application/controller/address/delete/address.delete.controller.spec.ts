@@ -3,7 +3,7 @@ import { AddressDeleteController } from '@user/application/controller';
 import { AddressDeleteService } from '@user/domain/service';
 import { mockedAddressEntity } from '@test/mock';
 import { InternalServerErrorException } from '@nestjs/common';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 
 describe('AddressDeleteController', () => {
   let controller: AddressDeleteController;
@@ -25,7 +25,9 @@ describe('AddressDeleteController', () => {
 
     it('should call AddressDeleteService - error', async () => {
       mockedAddressDeleteService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller

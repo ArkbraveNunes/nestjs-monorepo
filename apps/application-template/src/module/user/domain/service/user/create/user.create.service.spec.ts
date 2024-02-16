@@ -7,7 +7,7 @@ import {
   UserCreateServiceInputDto,
 } from '@user/domain/service';
 import { UserRepositoryContract } from '@user/domain/contract';
-import { MESSAGES_ERRORS, MESSAGES_SUCCESS } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_MESSAGES_SUCCESS } from '@common/enum';
 import { CryptographDataService } from '@libs/cryptograph-data';
 
 describe('UserCreateService', () => {
@@ -42,13 +42,17 @@ describe('UserCreateService', () => {
     expect(userRepository.create).toHaveBeenCalledTimes(1);
     expect(actualResult.id).toBeDefined();
     expect(
-      actualResult.message.includes(MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS),
+      actualResult.message.includes(
+        USER_MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS,
+      ),
     ).toBe(true);
   });
 
   it('error status 500 - cryptographDataService - internal server error', async () => {
     cryptographDataService.encryptData.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service
@@ -61,7 +65,9 @@ describe('UserCreateService', () => {
 
   it('error status 500 - database - internal server error', async () => {
     userRepository.create.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

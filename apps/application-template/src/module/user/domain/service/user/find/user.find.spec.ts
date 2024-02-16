@@ -3,7 +3,7 @@ import { MockProxy, mock } from 'jest-mock-extended';
 import { InternalServerErrorException } from '@nestjs/common';
 
 import { mockedUserEntity } from '@test/mock';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { UserFindService } from '@user/domain/service';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { RequestContextInterface } from '@common/request-context';
@@ -33,7 +33,9 @@ describe('UserFindService', () => {
 
   it('error status 500 - database - internal server error', async () => {
     userRepository.findById.mockRejectedValue(
-      new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+      new InternalServerErrorException(
+        USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+      ),
     );
 
     await service

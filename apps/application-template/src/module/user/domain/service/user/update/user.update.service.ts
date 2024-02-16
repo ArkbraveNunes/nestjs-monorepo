@@ -9,7 +9,11 @@ import { Service } from '@libs/contract';
 import { ProfileProps } from '@user/domain/entity';
 import { UserRepositoryContract } from '@user/domain/contract';
 import { RequestContextInterface } from '@common/request-context';
-import { MESSAGES_SUCCESS, REPOSITORY, REQUEST_CONTEXT } from '@common/enum';
+import {
+  USER_MESSAGES_SUCCESS,
+  REPOSITORY,
+  REQUEST_CONTEXT,
+} from '@common/enum';
 
 @Injectable()
 export class UserUpdateService
@@ -32,7 +36,7 @@ export class UserUpdateService
     await this.userRepository.updateUserProfile(userId, profileData);
 
     return {
-      message: [MESSAGES_SUCCESS.USER_UPDATED_WITH_SUCCESS],
+      message: [USER_MESSAGES_SUCCESS.USER_UPDATED_WITH_SUCCESS],
     };
   }
 }

@@ -3,7 +3,7 @@ import { AddressCreateController } from '@user/application/controller';
 import { AddressCreateService } from '@user/domain/service';
 import { mockedAddressEntity } from '@test/mock';
 import { InternalServerErrorException } from '@nestjs/common';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { AddressCreateInputDto } from '@user/application/dto';
 
 describe('AddressCreateController', () => {
@@ -34,7 +34,9 @@ describe('AddressCreateController', () => {
 
     it('should call AddressCreateService - error', async () => {
       mockedAddressCreateService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller

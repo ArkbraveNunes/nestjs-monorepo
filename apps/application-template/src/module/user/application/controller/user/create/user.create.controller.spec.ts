@@ -2,7 +2,7 @@ import { MockProxy, mock } from 'jest-mock-extended';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { InternalServerErrorException } from '@nestjs/common';
 
-import { MESSAGES_ERRORS, MESSAGES_SUCCESS } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_MESSAGES_SUCCESS } from '@common/enum';
 import { mockedUserEntity, mockedAddressEntity } from '@test/mock';
 import { UserCreateService } from '@user/domain/service';
 import { UserCreateInputDto } from '@user/application/dto';
@@ -21,7 +21,7 @@ describe('UserCreateController', () => {
     mockedUserCreateService = mock();
     mockedUserCreateService.execute.mockResolvedValue({
       id: faker.string.uuid(),
-      message: [MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS],
+      message: [USER_MESSAGES_SUCCESS.USER_CREATED_WITH_SUCCESS],
     });
   });
 
@@ -38,7 +38,9 @@ describe('UserCreateController', () => {
 
     it('should call UserCreateService - error', async () => {
       mockedUserCreateService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller.userCreate(userCreateInputDto).catch((actualError) => {

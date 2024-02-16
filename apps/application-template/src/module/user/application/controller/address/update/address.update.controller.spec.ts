@@ -5,7 +5,7 @@ import {
   AddressUpdateInputDto,
   AddressUpdateParamIdDto,
 } from '@user/application/dto';
-import { MESSAGES_ERRORS } from '@common/enum';
+import { USER_MESSAGES_ERRORS } from '@common/enum';
 import { mockedAddressEntity } from '@test/mock';
 import { AddressUpdateService } from '@user/domain/service';
 import { AddressUpdateController } from '@user/application/controller';
@@ -40,7 +40,9 @@ describe('AddressUpdateController', () => {
 
     it('should call AddressUpdateService - error', async () => {
       mockedAddressUpdateService.execute.mockRejectedValue(
-        new InternalServerErrorException(MESSAGES_ERRORS.INTERNAL_SERVER_ERROR),
+        new InternalServerErrorException(
+          USER_MESSAGES_ERRORS.INTERNAL_SERVER_ERROR,
+        ),
       );
 
       await controller

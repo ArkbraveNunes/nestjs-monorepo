@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 
 import { UserFindServiceOutputDto } from '@user/domain/service';
-import { MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
+import { USER_MESSAGES_ERRORS, USER_GENDER } from '@common/enum';
 import { BadRequestErrorOutputDto } from '@libs/common-dto';
 
 class ProfileOutputDto {
@@ -103,9 +103,9 @@ export class UserFindOutputDto {
 export class UserFindBadRequestOutputDto extends BadRequestErrorOutputDto {
   @ApiProperty({
     example: [
-      MESSAGES_ERRORS.TENANT_IS_INVALID,
-      MESSAGES_ERRORS.TENANT_IS_REQUIRED,
+      USER_MESSAGES_ERRORS.TENANT_IS_INVALID,
+      USER_MESSAGES_ERRORS.TENANT_IS_REQUIRED,
     ],
   })
-  message: MESSAGES_ERRORS[];
+  message: USER_MESSAGES_ERRORS[];
 }

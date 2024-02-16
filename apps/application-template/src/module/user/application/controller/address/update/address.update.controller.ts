@@ -31,7 +31,7 @@ import {
   InternalServerErrorOutputDto,
 } from '@libs/common-dto';
 import { UserUnauthorizedOutputDto } from '@common/dto';
-import { MESSAGES_SUCCESS } from '@common/enum';
+import { USER_MESSAGES_SUCCESS } from '@common/enum';
 
 @Controller({ version: '1' })
 @ApiBearerAuth('token')
@@ -62,6 +62,6 @@ export class AddressUpdateController {
       ...updateAddressInputDto,
     });
 
-    return { message: [MESSAGES_SUCCESS.ADDRESS_UPDATED_WITH_SUCCESS] };
+    return { message: [USER_MESSAGES_SUCCESS.ADDRESS_UPDATED_WITH_SUCCESS] };
   }
 }
