@@ -13,6 +13,7 @@
       "moduleNameMapper": {
         "^@user(.*)$": "<rootDir>/src/module/user/$1",
         "^@auth(.*)$": "<rootDir>/src/module/auth/$1",
+        "^@history(.*)$": "<rootDir>/src/module/history/$1",
         "^@common(.*)$": "<rootDir>/src/common/$1",
         "^@libs(.*)$": "<rootDir>/../../libs/$1",
         "^@test(.*)$": "<rootDir>/test/$1"

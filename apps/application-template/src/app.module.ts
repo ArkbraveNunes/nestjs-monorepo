@@ -11,9 +11,16 @@ import { TenantHeaderInputDto } from '@libs/common-dto';
 import { CommonModule } from '@common/common.module';
 import { UserModule } from '@user/user.module';
 import { AuthModule } from '@auth/auth.module';
+import { HistoryModule } from '@history/history.module';
 
 @Module({
-  imports: [HealthCheckModule, CommonModule, UserModule, AuthModule],
+  imports: [
+    HealthCheckModule,
+    CommonModule,
+    UserModule,
+    AuthModule,
+    HistoryModule,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

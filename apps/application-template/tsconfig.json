@@ -5,6 +5,9 @@
     "baseUrl": "./",
     "outDir": "../../dist/apps/application-template",
     "paths": {
+      "@history/*": [
+        "./src/module/history/*"
+      ],
       "@auth/*": [
         "./src/module/auth/*"
       ],
