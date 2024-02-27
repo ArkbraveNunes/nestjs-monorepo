@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+# Enable to read user input
+exec < /dev/tty
+
+echo "========================================"
+echo "========= Open Merge Request? =========="
+echo "========================================"
+# Open prompt to confirm open merge request
+read -p "Do you want to open merge request? (Y/n) " -r REPLY
+
+# If user press "Y" or "y" open merge request
+if [ -z $REPLY ] || [ $REPLY = "Y" ] || [ $REPLY = "y" ];
+then
+  # Get list os commits to push
+  commits=$(git fetch && git log --pretty=format:"%s" --no-merges origin/develop..HEAD | tr '\n' '%')
+
+  # Convert special characters to url format
+  commits_formated=$(echo $commits | sed -e 's/%/%0A%2D%20/g' -e 's/ /%20/g' -e 's/!/%21/g' -e 's/"/%22/g' -e 's/#/%23/g' -e 's/\$/%24/g' -e 's/\&/%26/g' -e "s/'/%27/g" -e 's/(/%28/g' -e 's/)/%29/g' -e 's/\*/%2A/g' -e 's/+/%2B/g' -e 's/,/%2C/g' -e 's/-/%2D/g' -e 's/\./%2E/g' -e 's/\//%2F/g' -e 's/:/%3A/g' -e 's/;/%3B/g' -e 's//%3E/g' -e 's/?/%3F/g' -e 's/@/%40/g' -e 's/\[/%5B/g' -e 's/\\/%5C/g' -e 's/\]/%5D/g' -e 's/\^/%5E/g' -e 's/_/%5F/g' -e 's/`/%60/g' -e 's/{/%7B/g' -e 's/|/%7C/g' -e 's/}/%7D/g' -e 's/~/%7E/g')
+
+  commits_formated="%2D%20$commits_formated"
+
+  # Replace ✨ 🐛 🔧 💄 🚀 👷 ⚡️ 🔨 ✅ 📝 with %20
+  commits_formated=$(echo $commits_formated | sed -e 's/✨%20/%20/g' -e 's/🐛%20/%20/g' -e 's/🔧%20/%20/g' -e 's/💄%20/%20/g' -e 's/🚀%20/%20/g' -e 's/👷%20/%20/g' -e 's/⚡️%20/%20/g' -e 's/🔨%20/%20/g' -e 's/✅%20/%20/g' -e 's/📝%20/%20/g' -e 's/%20%20/%20/g')
+
+  # Get actual branch
+  branch=$(git branch | grep \* | cut -d ' ' -f2)
+
+  #Get remote url
+  remote_url=$(git config --get remote.origin.url)
+
+  # Replace "git@" with "https://" and remove ".git"
+  remote_url_with_http=$(echo $remote_url | sed  -e 's/:/\//' -e 's/git@/https:\/\//' -e 's/\.git//')
+
+  # Change link to merge request
+  merge_request_link="$remote_url_with_http/merge_requests/new?merge_request%5Bsource_branch%5D=$branch&merge_request%5Btarget_branch%5D=develop&merge_request[title]=$branch&merge_request[description]=$commits_formated"
+
+  # Open link in browser
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    open $merge_request_link
+  else
+    xdg-open $merge_request_link
+  fi
+fi
