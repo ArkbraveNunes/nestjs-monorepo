@@ -1,10 +1,67 @@
-## Nestjs-Monorepo
+# Nestjs-Monorepo
 
 Olá, bom dia, aqui será apresentado uma documentação relativa a estrutura de todas as aplicações que forem criadas dentro desse monorepo, o objetivo dessa documentação é expôr de maneira clara e objetiva o funcionamento da aplicação bem como sua estrutura. Os padrões aqui impostos seguem conceitos como Clean Code, Clean Architecture, SOLID, DRY, KISS e Design Patterns. Essa documentação também tem correlação ao [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) proposto pelo Google. Uma outra fonte de inspiração foi o repositório [Clean Code Typescript](https://github.com/labs42io/clean-code-typescript), que adapta conceitos conhecidos do Clean Code para o Typescript.
 
-## IMPORTANTE
+# IMPORTANTE
 
 Para rodar esse projeto é necessário o mesmo estar dentro da pasta projects no repositório [docker-development](https://github.com/ArkbraveNunes/docker-development.git) para ser executado, para mais informações, favor conferir o Readme do docker-development!
+
+## Commitlint, Husky e Commitzen
+
+### Instalação do Commitlint:
+
+```shell
+npm install @commitlint/config-conventional @commitlint/cli --save-dev
+```
+
+É possível gerenciar as configurações do commitlint no arquivo commitlint.config.js
+
+### Instalação do Husky:
+
+```shell
+npm install -g husky
+npm install husky --save-dev
+```
+
+Adicione o script abaixo do husky no package.json
+
+```
+"scripts": {
+  "prepare": "husky install"
+}
+```
+
+Para finalizar adicione os arquivos "commit-msg" e "husky.sh" da pasta .husky como hooks; OBS: Em alguns casos sera adicionado um "undefined" no final de ambos arquivos, é necessário remover esse "undefined" de ambos, senão o hook do husky não irá funcionar!
+
+```shell
+npx husky add .husky/husky.sh
+npx husky add .husky/commit-msg
+npx husky add .husky/pre-commit
+npx husky add .husky/pre-push
+npx husky add .husky/open-merge
+```
+
+### Instalação do Commitzen:
+
+```shell
+npm install -g commitizen
+npm install commitizen --save-dev
+commitizen init cz-conventional-changelog
+```
+
+Adicione o script abaixo do commitzen no package.json
+
+```
+"scripts": {
+  "commit": "git-cz"
+}
+```
+
+Agora usando o commando "git-cz" será aberta uma interface onde você pode escolher qual o tipo de categoria do commit (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert); Selecionando a categoria você poderá digitar o escopo que pertence o commit, uma mensagem curta sobre o commit, e caso deseje adicionar mais detalhes também terá a opção de colocar uma descrição;
+
+Caso tenha alguma dúvida ou queira personalizar mais a configuração, segue abaixo o artigo em que foi inspirado a implementação dessas ferramentas:
+
+[Padronização de commit com (Commitlint, Husky e Commitizen)](https://dev.to/vitordevsp/padronizacao-de-commit-com-commitlint-husky-e-commitizen-3g1n)
 
 ## Swagger
 
@@ -26,6 +83,7 @@ Principais ferramentas utilizadas:
 - [Husky](https://typicode.github.io/husky/)
 - [CommitLint](https://commitlint.js.org/#/)
 - [Commitzen](https://commitizen-tools.github.io/commitizen/)
+- [Padronização de commit com (Commitlint, Husky e Commitizen)](https://dev.to/vitordevsp/padronizacao-de-commit-com-commitlint-husky-e-commitizen-3g1n)
 - [Typescript](https://www.typescriptlang.org/)
 - [ESLint](https://eslint.org/)
 - [ESLint SonarJS](https://github.com/SonarSource/eslint-plugin-sonarjs/tree/master)
@@ -91,15 +149,10 @@ CASO QUEIRA UMA VISUALIZAÇÃO MAIS DIDÁTICA VOCÊ PODE RODAR O COMPODOC COM O 
 
 ```shell
 npm run compodoc:build
-```
-
-SEGUIDO DE UM:
-
-```shell
 npm run compodoc:run
 ```
 
-E ACESSAR VIA http://localhost:4000 UMA INTERFACE VISUAL COM A ESTRUTURAÇÃO DE TODOS OS MÓDULOS DO PROJETO!
+ACESSANDO O http://localhost:4000 UMA INTERFACE VISUAL SERÁ APRESENTADA COM A ESTRUTURAÇÃO DE TODOS OS MÓDULOS DO PROJETO!
 
 ## Testes
 
@@ -115,7 +168,7 @@ E ACESSAR VIA http://localhost:4000 UMA INTERFACE VISUAL COM A ESTRUTURAÇÃO DE
   - `test:debug` - executa os testes no modo debug.
   - `test:e2e` - executa os testes e2e.
 
-### Husky
+## Husky
 
 O Husky é uma ferramenta utilizada para a criação e execução de [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), permitindo executar lint, tests, etc... ao fazer um commit ou push.
 Neste projeto temos três hooks configurados:
@@ -126,7 +179,7 @@ Neste projeto temos três hooks configurados:
 
 Para melhor entendimento do funcionamento dessa biblioteca, basta acessar o [guia](https://typicode.github.io/husky/guide.html) disponível na documentação oficial do Husky.
 
-### Eslint + Prettier + SonarJS
+## Eslint + Prettier + SonarJS
 
 O ESLint/Prettier/SonarJS analisa estaticamente o código da aplicação para encontrar e corrigir problemas de lint rapidamente. Todas as configurações de plugins e regras de lint utilizadas estão no arquivo `.eslintrc.js` na raiz da aplicação.
 
@@ -344,7 +397,7 @@ const date = new Date();
 addMonthToDate(date, 1);
 ```
 
-## Referências
+# Referências
 
 - [The Clean Code Blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [The Catalog of Design Patterns](https://refactoring.guru/design-patterns/catalog)
