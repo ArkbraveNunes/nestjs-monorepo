@@ -20,7 +20,7 @@ npm install @commitlint/config-conventional @commitlint/cli --save-dev
 
 ```shell
 npm install -g husky
-npm install husky --save-dev
+npm install husky@^8.0.3 --save-dev
 ```
 
 Adicione o script abaixo do husky no package.json
